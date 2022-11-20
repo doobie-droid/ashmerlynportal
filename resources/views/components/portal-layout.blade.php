@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Home</title>
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" />
+    <title>Ash Merlyn Portal || Home</title>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -76,11 +76,14 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
+            <form method="post" action="/logout">
+                @csrf
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <button class="btn btn-outline-danger" type="submit" >Logout</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

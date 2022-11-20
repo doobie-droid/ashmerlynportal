@@ -6,8 +6,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" />
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Ash Merlyn Portal</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -17,11 +18,18 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+<body style="background-image: url({{asset('ashmerlyn.jpg')}});background-size: cover;
+  margin: 0;
+  padding: 0;
+  background-color:  hsl(209, 95%, 90.1%);
+  height: 100vh;
+">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img height="20px" src="{{asset('logo.png')}}">
+                    Ash Merlyn
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -76,5 +84,7 @@
             @yield('content')
         </main>
     </div>
+
 </body>
+
 </html>
