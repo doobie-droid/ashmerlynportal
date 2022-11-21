@@ -38,7 +38,9 @@ class UserController extends Controller
     public function create()
     {
         //
-        return view('admin.users.create');
+        $roles =  Role::where('name','!=','Administrator')->get();
+
+        return view('admin.users.create',compact(['roles']));
     }
 
     /**
@@ -56,9 +58,10 @@ class UserController extends Controller
             'middlename'=>['required','string','max:255'],
             'surname'=>['required','string','max:255'],
             'email' =>  'nullable|email|max:255|unique:users',
+            'roles'=> ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        User::create([
+        $user = User::create([
             'username' => Str::lower($inputs['username']),
             'firstname' => Str::ucfirst( Str::lower($inputs['firstname'])),
             'middlename' => Str::ucfirst( Str::lower($inputs['middlename'])),
@@ -66,8 +69,14 @@ class UserController extends Controller
             'email' => $inputs['email'],
             'password' => Hash::make($inputs['password']),
        ]);
-        Session::flash('record_created', 'Your request has been successfully created');
+        if($inputs['roles']){
+            $user->roles()->attach(Role::find($inputs['roles']));
+            Session::flash('record_created', 'Your user has been successfully created and the role assigned');
+        } else{
+            Session::flash('record_created', 'Your user has been successfully created without a role');
+        }
         return back();
+
 
     }
 

@@ -10,11 +10,11 @@
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClasses" aria-expanded="true" aria-controls="collapsePages">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChildResult" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
         <span>List Children</span>
     </a>
-    <div id="collapseClasses" class="collapse" aria-labelledby="headingClasses" data-parent="#accordionSidebar">
+    <div id="collapseChildResult" class="collapse" aria-labelledby="headingChildResult" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Classes:</h6>
             <a class="collapse-item" href="login.html"> View Child 1's Result</a>
