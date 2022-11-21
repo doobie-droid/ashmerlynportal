@@ -21,6 +21,11 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 @yield('style')
+    <style>
+        .ghost {
+            display: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -28,9 +33,10 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-   <x-portal-sidebar>
 
-   </x-portal-sidebar>
+   <x-sidebar.portal-sidebar>
+
+   </x-sidebar.portal-sidebar>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
