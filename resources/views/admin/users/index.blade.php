@@ -13,40 +13,45 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Profile Picture</th>
+                            <th>Email</th>
+                            <th>Sex</th>
+                            <th>Date of Birth</th>
+                            <th>Date Created:</th>
+                            <th>Last Update:</th>
+                            <th>Status</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Profile Picture</th>
+                            <th>Email</th>
+                            <th>Sex</th>
+                            <th>Date of Birth</th>
+                            <th>Date Created:</th>
+                            <th>Last Update:</th>
+                            <th>Status</th>
+                            <th>Delete</th>
                         </tr>
                         </tfoot>
                         <tbody>
+                        @if($users)
+                            @foreach($users as $user)
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td>{{$user->surname.' '.$user->firstname}}</td>
+                            <td>Profile Picture</td>
+                            <td>{{$user->email}}</td>
+                            <td>Male</td>
+                            <td>Date of Birth</td>
+                            <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
+                            <td>{{\Carbon\Carbon::parse($user->updated_at)->diffForHumans()}}</td>
+                            <td>Activate</td>
+                            <td>Delete</td>
                         </tr>
-                        <tr>
-                            <td>Donna Snider</td>
-                            <td>Customer Support</td>
-                            <td>New York</td>
-                            <td>27</td>
-                            <td>2011/01/25</td>
-                            <td>$112,000</td>
-                        </tr>
+                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
