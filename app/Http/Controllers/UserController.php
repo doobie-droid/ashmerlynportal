@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users =User::all()->except(Auth::id());
+        $users =User::paginate(5);
 
         return view('admin.users.index',compact(['users']));
     }

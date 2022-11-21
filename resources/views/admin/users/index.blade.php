@@ -57,13 +57,13 @@
                 </div>
             </div>
         </div>
+        {{$users->links()}}
     @endsection
     @section('scripts')
         <!-- Page level plugins -->
         <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
         <script src="{{asset('vendor/datatables/dataTables.bootstrap4.js')}}"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="{{asset('js/datatables-demo.js')}}"></script>
+
     @endsection
 </x-portal-layout>
