@@ -10,6 +10,9 @@
                 <th scope="col">Role</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Role Population</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Last Modified At</th>
+
             </tr>
             </thead>
             <tbody>
@@ -22,6 +25,9 @@
                 <td>{{$role->name}}</td>
                 <td>{{$role->slug}}</td>
                 <td>population static</td>
+                <td>{{\Carbon\Carbon::parse($role->created_at)->diffForHumans()}}</td>
+                <td>{{\Carbon\Carbon::parse($role->updated_at)->diffForHumans()}}</td>
+
             </tr>
                 @endforeach
             @endif
