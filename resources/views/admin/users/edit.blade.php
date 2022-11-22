@@ -55,19 +55,7 @@
                     </div>
 
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>UserName</label>
-                        <input name="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                               id="username"
-                               value="{{$user->username}}">
-                        @error('username')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
 
-                    </div>
-
-                </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Email Address</label>
@@ -115,8 +103,8 @@
                         <label>Gender</label>
 
                         <select class="form-control" id="sex" name="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option @if($user->userIs('male'))selected @endif value="male">Male</option>
+                            <option @if($user->userIs('female'))selected @endif value="female">Female</option>
 
                         </select>
                     </div>

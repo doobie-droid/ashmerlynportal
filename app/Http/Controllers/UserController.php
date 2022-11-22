@@ -129,10 +129,24 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user)
     {
-        //
-        return $request;
+        $inputs = request()->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'middlename' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'avatar' => 'nullable|file|mimes:jpg,png|',
+            'phone_number' => 'nullable|size:11',
+            'date_of_birth' => 'nullable|date',
+            'gender' => ['required'],
+        ]);
+        if (request('avatar')) {
+            $inputs['avatar'] = request('avatar')->store('images');
+        }
+        $user->update($inputs);
+        Session::flash('record_updated', 'Your user: '.$inputs['surname'].' '.$inputs['firstname'].' has been successfully updated');
+        return back();
     }
 
     /**
