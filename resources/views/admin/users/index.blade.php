@@ -7,20 +7,22 @@
 
             <div class="card-header py-3">
 
-                <a href="{{route('user.index')}}"><button class="btn btn-outline-primary text-right">Show All Users</button></a>
+                <a href="{{route('user.index')}}">
+                    <button class="btn btn-outline-primary text-right">Show All Users</button>
+                </a>
                 <br>
                 <br>
-                <form method="get"  action="{{route('user.show')}}">
+                <form method="get" action="{{route('user.show')}}">
                     @csrf
-                <div class="input-group">
-                    <input type="text" name="query" class="form-control" placeholder="Enter any name of the user">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
+                    <div class="input-group">
+                        <input type="text" name="query" class="form-control" placeholder="Enter any name of the user">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
 
-                </div>
+                    </div>
                 </form>
 
             </div>
@@ -34,7 +36,7 @@
                             <th>Email</th>
                             <th>Sex</th>
                             <th>Date of Birth</th>
-                            <th>Date Created:</th>
+
                             <th>Last Update:</th>
                             <th>Status</th>
                             <th>Delete</th>
@@ -47,7 +49,7 @@
                             <th>Email</th>
                             <th>Sex</th>
                             <th>Date of Birth</th>
-                            <th>Date Created:</th>
+
                             <th>Last Update:</th>
                             <th>Status</th>
                             <th>Delete</th>
@@ -57,15 +59,34 @@
                         @if($users)
                             @foreach($users as $user)
                                 <tr>
-                                    <td><a href="{{route('user.profile.edit',$user->id)}}">{{$user->surname.' '.$user->firstname}}</a></td>
+                                    <td>
+                                        <a href="{{route('user.profile.edit',$user->id)}}">{{$user->surname.' '.$user->firstname}}</a>
+                                    </td>
                                     <td><img height="60px" src="{{$user->avatar}}"></td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->gender}}</td>
-                                    <td>{{\Carbon\Carbon::parse($user->date_of_birth)->diffForHumans()}}</td>
-                                    <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
+                                    <td>{{$user->date_of_birth}}</td>
+
                                     <td>{{\Carbon\Carbon::parse($user->updated_at)->diffForHumans()}}</td>
-                                    <td>Activate</td>
-                                    <td>Delete</td>
+                                    <td>
+                                        <form method="post" action="{{route('user.status.update',$user->id)}}">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                Deactivate
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{{route('user.destroy',$user->id)}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-circle">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif

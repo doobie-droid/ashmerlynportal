@@ -139,7 +139,7 @@
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">Reg No:</span> {{'AMIS/SEC/20'.substr($loggedinuser->username,2,2).'/'.substr($loggedinuser->username,4,4)}}</li>
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600 ">Email:</span>
                                                 {{$loggedinuser->email}}</li>
-                                            <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">DOB:</span>{{\Carbon\Carbon::parse($loggedinuser->date_of_birth)->diffForHumans()}}</li>
+                                            <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">DOB:</span>{{$loggedinuser->date_of_birth}}</li>
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">Class:</span> Year 10 Static</li>
 
                                         </ul>
