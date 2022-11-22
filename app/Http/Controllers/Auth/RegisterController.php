@@ -57,6 +57,7 @@ class RegisterController extends Controller
             'surname'=>['required','string','max:255'],
             'email' =>  'nullable|email|max:255|unique:users',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'gender'=>['required'],
             'administratortoken' => ["required" , "max:255", "regex:(ashmerlyn890)"]
         ]);
     }
@@ -75,6 +76,7 @@ class RegisterController extends Controller
             'middlename' => Str::ucfirst($data['middlename']),
             'surname' => Str::ucfirst($data['surname']),
             'email' => $data['email'],
+            'gender'=>$data['gender'],
             'password' => Hash::make($data['password']),
         ]);
     }

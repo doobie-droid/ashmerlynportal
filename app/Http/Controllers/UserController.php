@@ -60,15 +60,26 @@ class UserController extends Controller
             'middlename'=>['required','string','max:255'],
             'surname'=>['required','string','max:255'],
             'email' =>  'nullable|email|max:255|unique:users',
+            'avatar'=>'file|mimes:jpg,png|',
+            'phone_number'=> 'nullable|size:11',
+            'date_of_birth'=>'nullable|date',
+            'gender'=>['required'],
             'roles'=> ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+        if(request('avatar')){
+            $inputs['avatar']=request('avatar')->store('images');
+        }
         $user = User::create([
             'username' => Str::lower($inputs['username']),
             'firstname' => Str::ucfirst( Str::lower($inputs['firstname'])),
             'middlename' => Str::ucfirst( Str::lower($inputs['middlename'])),
             'surname' => Str::ucfirst( Str::lower($inputs['surname'])),
             'email' => $inputs['email'],
+            'phone_number'=>$inputs['phone_number'],
+            'gender'=>$inputs['gender'],
+            'date_of_birth'=>$inputs['date_of_birth'],
+            'avatar'=>$inputs['avatar'],
             'password' => Hash::make($inputs['password']),
        ]);
         if($inputs['roles']){

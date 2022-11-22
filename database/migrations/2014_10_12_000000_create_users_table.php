@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('middlename');
             $table->string('surname');
             $table->string('email')->unique()->nullable();
+            $table->text('avatar')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('gender');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

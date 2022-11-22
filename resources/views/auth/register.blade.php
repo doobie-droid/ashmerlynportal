@@ -80,6 +80,18 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" id="sex" name="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+
+                                </select>
+
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
