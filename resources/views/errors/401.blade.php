@@ -22,7 +22,7 @@
         <div class="error mx-auto" data-text="404">401</div>
         <p class="lead text-gray-800 mb-5">Unauthorised</p>
         <p class="text-gray-500 mb-0">You do not have the permission to view this page</p>
-        <a href="index.html">&larr; Back to Dashboard</a>
+        <a href="{{route('home')}}">&larr; Back to Dashboard</a>
     </div>
 
 </div>

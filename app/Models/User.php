@@ -63,4 +63,18 @@ class User extends Authenticatable
             return true;
         }
     }
+
+    public function userHasRole($rolename)
+    {
+        //go to the main admin file to impleme
+
+        foreach ($this->roles as $role) {
+            if (Str::lower($rolename) == Str::lower($role->name)) {
+                return true;
+            }
+        }
+        return false;
+
+
+    }
 }
