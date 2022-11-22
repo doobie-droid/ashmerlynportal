@@ -145,8 +145,55 @@ class UserController extends Controller
             $inputs['avatar'] = request('avatar')->store('images');
         }
         $user->update($inputs);
-        Session::flash('record_updated', 'Your user: '.$inputs['surname'].' '.$inputs['firstname'].' has been successfully updated');
+        Session::flash('record_updated', 'Your user: ' . $inputs['surname'] . ' ' . $inputs['firstname'] . ' has been successfully updated');
         return back();
+    }
+
+    public function passwordedit(User $user)
+    {
+        if (auth::user()->id == $user->id) {
+            return view('admin.users.password-edit', compact('user'));
+        } else {
+            abort(401);
+        }
+
+
+    }
+
+    public function passwordupdate(User $user)
+    {
+        if (auth::user()->id == $user->id) {
+            if ($user->userHasRole('administrator')) {
+                $inputs = Request()->validate([
+                    'currentpassword' => 'current_password',
+                    'password' => ['required', 'string', 'confirmed', Password::min(8)
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols()
+                        ->uncompromised()],
+                ]);
+            } elseif ($user->userHasRole('teacher')) {
+                $inputs = Request()->validate([
+                    'currentpassword' => 'current_password',
+                    'password' => ['required', 'string', 'confirmed', Password::min(8)
+                        ->mixedCase()
+                        ->uncompromised()],
+                ]);
+            } else {
+                $inputs = Request()->validate([
+                    'currentpassword' => 'current_password',
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                ]);
+
+            }
+            User::where('id', auth::user()->id)->update(['password'=>Hash::make($inputs['password'])]);
+            Session::flash('password_updated', 'Your password has been successfully changed');
+            return back();
+        } else {
+            abort(401);
+        }
+
+
     }
 
     /**

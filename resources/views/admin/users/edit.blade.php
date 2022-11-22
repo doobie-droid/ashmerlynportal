@@ -2,7 +2,9 @@
 
     @section('content')
         @if($user)
-
+            @if(\Illuminate\Support\Facades\Session::has('record_updated'))
+                <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('record_updated')}}</div>
+            @endif
             <form method="POST" action="{{route('user.profile.update',$user->id)}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

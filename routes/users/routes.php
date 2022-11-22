@@ -15,6 +15,10 @@ Route::get('admin/users/{user}/edit','App\Http\Controllers\UserController@edit')
 
 Route::put('admin/users/{user}/update','App\Http\Controllers\UserController@update')->name('user.profile.update');
 
+Route::get('/users/{user}/password/edit','App\Http\Controllers\UserController@passwordedit')->name('user.password.edit');
+
+Route::patch('/users/{user}/password/update','App\Http\Controllers\UserController@passwordupdate')->name('user.password.update');
+
 
 
 Route::get('/admin/user/create','App\Http\Controllers\UserController@create')->name('user.create');
