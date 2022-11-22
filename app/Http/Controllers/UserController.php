@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -20,8 +21,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users =User::paginate(5);
-
+        $users = User::where('id','!=',Auth::id())->orderBy('created_at','DESC')->paginate(5);
         return view('admin.users.index',compact(['users']));
     }
 
@@ -88,10 +88,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $users = DB::table('users')
+            ->where("firstname", "LIKE", "%".$request['query']."%")
+            ->orWhere("middlename", "LIKE", "%".$request['query']."%")
+            ->orWhere("surname", "LIKE", "%".$request['query']."%")
+            ->orderBy('created_at','DESC')->paginate(5);
+
+        return view('admin.users.index',compact(['users']));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -99,9 +107,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         //
+
+        return view('admin.users.edit',compact('user'));
     }
 
     /**
