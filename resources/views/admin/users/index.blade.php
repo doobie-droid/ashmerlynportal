@@ -58,10 +58,10 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td><a href="{{route('user.profile.edit',$user->id)}}">{{$user->surname.' '.$user->firstname}}</a></td>
-                                    <td>Profile Picture</td>
+                                    <td><img height="60px" src="{{$user->avatar}}"></td>
                                     <td>{{$user->email}}</td>
-                                    <td>Male</td>
-                                    <td>Date of Birth</td>
+                                    <td>{{$user->gender}}</td>
+                                    <td>{{\Carbon\Carbon::parse($user->date_of_birth)->diffForHumans()}}</td>
                                     <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
                                     <td>{{\Carbon\Carbon::parse($user->updated_at)->diffForHumans()}}</td>
                                     <td>Activate</td>

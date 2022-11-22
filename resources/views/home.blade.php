@@ -127,7 +127,7 @@
                                 <div class="row ">
                                     <div class="col-lg-6 mb-3 mb-lg-0">
                                         <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                        <img class="img-fluid" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" alt="...">
+                                        <img class="img-fluid" src="{{$loggedinuser->avatar}}" alt="...">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 px-xl-10">
@@ -139,7 +139,7 @@
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">Reg No:</span> {{'AMIS/SEC/20'.substr($loggedinuser->username,2,2).'/'.substr($loggedinuser->username,4,4)}}</li>
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600 ">Email:</span>
                                                 {{$loggedinuser->email}}</li>
-                                            <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">DOB:</span>09/11/11 Static</li>
+                                            <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">DOB:</span>{{\Carbon\Carbon::parse($loggedinuser->date_of_birth)->diffForHumans()}}</li>
                                             <li class="mb-2 mb-xl-3 display-28 scaling"><span class="display-26 text-secondary me-2 font-weight-600">Class:</span> Year 10 Static</li>
 
                                         </ul>
