@@ -4,8 +4,25 @@
     @endsection
     @section('content')
         <div class="card shadow mb-4">
+
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+
+                <a href="{{route('user.index')}}"><button class="btn btn-outline-primary text-right">Show All Users</button></a>
+                <br>
+                <br>
+                <form method="get"  action="{{route('user.show')}}">
+                    @csrf
+                <div class="input-group">
+                    <input type="text" name="query" class="form-control" placeholder="Enter any name of the user">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                </div>
+                </form>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -39,31 +56,24 @@
                         <tbody>
                         @if($users)
                             @foreach($users as $user)
-                        <tr>
-                            <td>{{$user->surname.' '.$user->firstname}}</td>
-                            <td>Profile Picture</td>
-                            <td>{{$user->email}}</td>
-                            <td>Male</td>
-                            <td>Date of Birth</td>
-                            <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
-                            <td>{{\Carbon\Carbon::parse($user->updated_at)->diffForHumans()}}</td>
-                            <td>Activate</td>
-                            <td>Delete</td>
-                        </tr>
+                                <tr>
+                                    <td><a href="{{route('user.profile.edit',$user->id)}}">{{$user->surname.' '.$user->firstname}}</a></td>
+                                    <td>Profile Picture</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>Male</td>
+                                    <td>Date of Birth</td>
+                                    <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
+                                    <td>{{\Carbon\Carbon::parse($user->updated_at)->diffForHumans()}}</td>
+                                    <td>Activate</td>
+                                    <td>Delete</td>
+                                </tr>
                             @endforeach
-                            @endif
+                        @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         {{$users->links()}}
-    @endsection
-    @section('scripts')
-        <!-- Page level plugins -->
-        <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.js')}}"></script>
-
-
     @endsection
 </x-portal-layout>
