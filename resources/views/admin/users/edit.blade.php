@@ -2,10 +2,14 @@
 
     @section('content')
         @if($user)
+
             <form method="POST" action="{{route('user.profile.update',$user->id)}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <img height="60px" src="{{$user->avatar}}">
+                <div class="form-row text-end"><button class="btn btn-outline-dark form-control">Reset Password</button></div>
+                <br>
+             <img height="60px" src="{{$user->avatar}}">
+
                 <br>
                 <br>
                 <div class="form-row">
