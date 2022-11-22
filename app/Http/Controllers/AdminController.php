@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
@@ -29,7 +34,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,7 +45,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,19 +56,51 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function passwordedit(User $user)
     {
-        //
+        if (!auth::user()->userHasRole('administrator')) {
+            return view('admin.users.admin-password-edit', compact('user'));
+        } else {
+            abort(401);
+        }
+
+
+    }
+
+    public function passwordupdate(User $user)
+    {
+
+        if (!auth::user()->userHasRole('administrator')) {
+            if($user->userHasRole('student')){
+                $inputs = Request()->validate([
+                    'password' => ['required', 'string', 'confirmed', 'min:6'],
+                ]);
+
+            }else{
+                $inputs = Request()->validate([
+                    'password' => ['required', 'string', 'confirmed', Password::min(8)
+                        ->symbols()
+                        ->uncompromised()],
+                ]);
+            }
+        } else {
+            abort(401);
+        }
+        User::where('id', $user->id)->update(['password' => Hash::make($inputs['password'])]);
+        Session::flash('password_updated', 'Your password has been successfully changed');
+        return back();
+
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +111,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

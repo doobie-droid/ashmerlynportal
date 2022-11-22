@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -186,7 +187,7 @@ class UserController extends Controller
                 ]);
 
             }
-            User::where('id', auth::user()->id)->update(['password'=>Hash::make($inputs['password'])]);
+            User::where('id', auth::user()->id)->update(['password' => Hash::make($inputs['password'])]);
             Session::flash('password_updated', 'Your password has been successfully changed');
             return back();
         } else {
@@ -196,14 +197,23 @@ class UserController extends Controller
 
     }
 
+    public function statusupdate(){
+        return "yeah the status gon be updated";
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
+
+        return "yeah the user gon be destroyed";
+//        $user->delete();
+//        Session::flash('message', 'The user with name ' . $user->name . 'was deleted.');
+//        return back();
     }
 }

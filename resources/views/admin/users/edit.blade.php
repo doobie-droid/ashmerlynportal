@@ -5,10 +5,15 @@
             @if(\Illuminate\Support\Facades\Session::has('record_updated'))
                 <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('record_updated')}}</div>
             @endif
+        <form method="get" action="{{route("admin.password.edit",$user->id)}}">
+            @csrf
+
+                <div class="form-row text-end"><button class="btn btn-outline-dark form-control">Reset Password</button></div>
+        </form>
             <form method="POST" action="{{route('user.profile.update',$user->id)}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="form-row text-end"><button class="btn btn-outline-dark form-control">Reset Password</button></div>
+
                 <br>
              <img height="60px" src="{{$user->avatar}}">
 
