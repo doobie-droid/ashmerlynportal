@@ -82,6 +82,19 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
+                        <label>Phone number</label>
+                        <input name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror"
+                               id="email"
+                               value="{{$user->phone_number}}">
+                        @error('phone_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label>Date of Birth</label>
                         <input name="date_of_birth" type="date"
                                class="form-control @error('date_of_birth') is-invalid @enderror" id="date_of_birth"
