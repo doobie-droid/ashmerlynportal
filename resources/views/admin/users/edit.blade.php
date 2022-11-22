@@ -18,13 +18,14 @@
                     </div>
 
                 </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Surname</label>
-                        <input name="surname" type="text" class="form-control @error('surname') is-invalid @enderror
-" id="surname"
-                               placeholder="Enter your Surname here..." value="{{$user->surname}}">
-                        @error('surname')
+                        <label>FirstName</label>
+                        <input name="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror
+" id="firstname"
+                               placeholder="Enter your first name here...." value="{{$user->firstname}}">
+                        @error('firstname')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                         @enderror
                     </div>
@@ -44,11 +45,11 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>FirstName</label>
-                        <input name="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror
-" id="firstname"
-                               placeholder="Enter your first name here...." value="{{$user->firstname}}">
-                        @error('firstname')
+                        <label>Surname</label>
+                        <input name="surname" type="text" class="form-control @error('surname') is-invalid @enderror
+" id="surname"
+                               placeholder="Enter your Surname here..." value="{{$user->surname}}">
+                        @error('surname')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                         @enderror
                     </div>
@@ -83,7 +84,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Phone number</label>
-                        <input name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror"
+                        <input name="phone_number" type="text"
+                               class="form-control @error('phone_number') is-invalid @enderror"
                                id="email"
                                value="{{$user->phone_number}}">
                         @error('phone_number')
@@ -106,7 +108,6 @@
                     </div>
 
                 </div>
-
 
 
                 <div class="form-row">
