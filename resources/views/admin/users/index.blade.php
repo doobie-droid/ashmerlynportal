@@ -4,7 +4,7 @@
     @endsection
     @section('content')
         @if(\Illuminate\Support\Facades\Session::has('message'))
-            <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('message')}}</div>
+            <div class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('message')}}</div>
         @endif
         <div class="card shadow mb-4">
 
@@ -30,6 +30,7 @@
 
             </div>
             <div class="card-body">
+
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
