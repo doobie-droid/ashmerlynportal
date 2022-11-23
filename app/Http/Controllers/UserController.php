@@ -197,8 +197,16 @@ class UserController extends Controller
 
     }
 
-    public function statusupdate(){
-        return "yeah the status gon be updated";
+    public function statusupdate(User $user)
+    {
+        if($user->status == 1){
+            $user->update(['status'=>0]);
+
+        }else{
+            $user->update(['status'=>1]);
+        }
+        return back();
+
     }
 
     /**
@@ -207,13 +215,12 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
         //
-
-        return "yeah the user gon be destroyed";
-//        $user->delete();
-//        Session::flash('message', 'The user with name ' . $user->name . 'was deleted.');
-//        return back();
+        $user = User::where('id', $request->id);
+        $user->delete();
+        Session::flash('message', 'The user with name ' . $user->name . 'was deleted.');
+        return back();
     }
 }
