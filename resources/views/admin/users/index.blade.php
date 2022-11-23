@@ -9,13 +9,18 @@
         <div class="card shadow mb-4">
 
             <div class="card-header py-3">
-
-                <a href="{{route('user.index')}}">
-                    <button class="btn btn-outline-primary text-right">Show All Users</button>
-                </a>
+                @if($status == 'all')
+                    <a href="{{route('user.index')}}">
+                        <button class="btn btn-outline-primary text-right">Show All Users</button>
+                    </a>
+                @else
+                    <a href="{{route('user.inactive-index')}}">
+                        <button class="btn btn-outline-primary text-right">Show All Deactivated Users</button>
+                    </a>
+                @endif
                 <br>
                 <br>
-                <form method="get" action="{{route('user.show')}}">
+                <form method="get" action="{{route('user.show',$status)}}">
                     @csrf
                     <div class="input-group">
                         <input type="text" name="query" class="form-control" placeholder="Enter any name of the user">

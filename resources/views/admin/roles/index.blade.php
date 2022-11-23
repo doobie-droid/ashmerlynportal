@@ -9,7 +9,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Role</th>
                 <th scope="col">Slug</th>
-                <th scope="col">Role Population</th>
+                <th scope="col">Permissions</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Last Modified At</th>
 
@@ -17,14 +17,14 @@
             </thead>
             <tbody>
             @if($roles)
-                <div class="ghost">{{$count = 0}}</div>
+
                 @foreach($roles as $role)
             <tr>
-               <div class="ghost"> {{$count += 1}}</div>
-                <th scope="row">{{$count}}</th>
-                <td>{{$role->name}}</td>
+
+                <th scope="row">{{$role->id}}</th>
+                <td><a href="{{route('role.users.show',$role->slug)}}">{{$role->name}}</a></td>
                 <td>{{$role->slug}}</td>
-                <td>population static</td>
+                <td><a href="#">Click to Edit</a></td>
                 <td>{{\Carbon\Carbon::parse($role->created_at)->diffForHumans()}}</td>
                 <td>{{\Carbon\Carbon::parse($role->updated_at)->diffForHumans()}}</td>
 

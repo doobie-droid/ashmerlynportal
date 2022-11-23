@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,17 +24,25 @@ class UserController extends Controller
     {
         //
         $users = User::where('id', '!=', Auth::id())->orderBy('id', 'DESC')->paginate(20);
-        return view('admin.users.index', compact(['users']));
+        $status = 'all';
+        return view('admin.users.index', compact(['users','status']));
     }
 
     public function activeindex()
     {
-        return view("admin.users.active-index");
+        $users = DB::table('users')
+            ->orderBy('id', 'desc')
+            ->where('id', '!=', Auth::id())
+            ->Where('status', '=', 1)
+            ->get();
+        return view("admin.users.active-index", compact(['users']));
     }
 
     public function deactivatedindex()
     {
-        return view('admin.users.deactivated-index');
+        $users = User::where([['id', '!=', Auth::id()], ['status', '=', 0]])->orderBy('id', 'DESC')->paginate(10);
+        $status = 'deactivated';
+        return view('admin.users.deactivated-index', compact(['users','status']));
     }
 
     /**
@@ -45,8 +54,9 @@ class UserController extends Controller
     {
         //
         $roles = Role::where('name', '!=', 'Administrator')->get();
-
-        return view('admin.users.create', compact(['roles']));
+        //to get the probable age of the sixteen year olds in school
+        $yearstart = Carbon::now()->year - 16;
+        return view('admin.users.create', compact(['roles', 'yearstart']));
     }
 
     /**
@@ -64,7 +74,7 @@ class UserController extends Controller
             'middlename' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
             'email' => 'nullable|email|max:255|unique:users',
-            'avatar' => 'nullable|file|mimes:jpg,png|',
+            'avatar' => 'nullable|file|mimes:jpg,png|max:90',
             'phone_number' => 'nullable|size:11',
             'date_of_birth' => 'nullable|date',
             'gender' => ['required'],
@@ -97,21 +107,34 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request,$status)
     {
         //
-        $users = DB::table('users')
-            ->where("firstname", "LIKE", "%" . $request['query'] . "%")
-            ->orWhere("middlename", "LIKE", "%" . $request['query'] . "%")
-            ->orWhere("surname", "LIKE", "%" . $request['query'] . "%")
-            ->orderBy('id', 'DESC')->paginate(5);
+        if ($status == 'all'){
+            $users = DB::table('users')
+                ->where("firstname", "LIKE", "%" . $request['query'] . "%")
+                ->orWhere("middlename", "LIKE", "%" . $request['query'] . "%")
+                ->orWhere("surname", "LIKE", "%" . $request['query'] . "%")
+                ->orderBy('id', 'DESC')->paginate(5);
+        }else {
+            $statusvalue = 0;
+            $users = DB::table('users')
+                ->where([["firstname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
+                ->orWhere([["middlename", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
+                ->orWhere([["surname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
+                ->orderBy('id', 'DESC')->paginate(5);
 
-        if(count($users )== 0){
+        }
+
+        if (count($users) == 0) {
             Session::flash('message', 'Sorry! there were no records found');
         }
-        return view('admin.users.index', compact(['users']));
+        return view('admin.users.index', compact(['users','status']));
     }
 
+    public function showdeactivated(){
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -122,8 +145,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
-
-        return view('admin.users.edit', compact('user'));
+        //to get the probable age of the sixteen year olds in school
+        $yearstart = Carbon::now()->year - 16;
+        return view('admin.users.edit', compact(['user', 'yearstart']));
     }
 
     /**
@@ -140,7 +164,7 @@ class UserController extends Controller
             'middlename' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'avatar' => 'nullable|file|mimes:jpg,png|',
+            'avatar' => 'nullable|file|mimes:jpg,png|max:90',
             'phone_number' => 'nullable|size:11',
             'date_of_birth' => 'nullable|date',
             'gender' => ['required'],
@@ -202,11 +226,11 @@ class UserController extends Controller
 
     public function statusupdate(User $user)
     {
-        if($user->status == 1){
-            $user->update(['status'=>0]);
+        if ($user->status == 1) {
+            $user->update(['status' => 0]);
 
-        }else{
-            $user->update(['status'=>1]);
+        } else {
+            $user->update(['status' => 1]);
         }
         return back();
 
