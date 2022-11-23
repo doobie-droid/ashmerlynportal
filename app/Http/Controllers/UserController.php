@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::where('id', '!=', Auth::id())->orderBy('created_at', 'DESC')->paginate(5);
+        $users = User::where('id', '!=', Auth::id())->orderBy('id', 'DESC')->paginate(20);
         return view('admin.users.index', compact(['users']));
     }
 
@@ -104,8 +104,11 @@ class UserController extends Controller
             ->where("firstname", "LIKE", "%" . $request['query'] . "%")
             ->orWhere("middlename", "LIKE", "%" . $request['query'] . "%")
             ->orWhere("surname", "LIKE", "%" . $request['query'] . "%")
-            ->orderBy('created_at', 'DESC')->paginate(5);
+            ->orderBy('id', 'DESC')->paginate(5);
 
+        if(count($users )== 0){
+            Session::flash('message', 'Sorry! there were no records found');
+        }
         return view('admin.users.index', compact(['users']));
     }
 
@@ -218,9 +221,8 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         //
-        $user = User::where('id', $request->id);
-        $user->delete();
-        Session::flash('message', 'The user with name ' . $user->name . 'was deleted.');
+        $user = User::where('id', $request->id)->delete();
+        Session::flash('message', 'The user has been deleted. ');
         return back();
     }
 }
