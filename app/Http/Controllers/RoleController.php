@@ -10,23 +10,39 @@ use Illuminate\Support\Str;
 class RoleController extends Controller
 {
     //
-    public function index(){
+    public function index()
+    {
         $roles = Role::all();
-        return view('admin.roles.index',compact(['roles']));
+        return view('admin.roles.index', compact(['roles']));
     }
-    public function create(){
+
+    public function create()
+    {
         return view('admin.roles.create');
     }
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
         $inputs = Request()->validate([
-            'name'=>['required','string','unique:roles'],
-            'administratortoken'=> ["required" , "max:255", "regex:(ashmerlyn890)"]
+            'name' => ['required', 'string', 'unique:roles'],
+            'administratortoken' => ["required", "max:255", "regex:(ashmerlyn890)"]
         ]);
-        $data['name'] = Str::ucfirst($inputs['name'] );
+        $data['name'] = Str::ucfirst($inputs['name']);
         $data['slug'] = Str::of(Str::lower($inputs['name']))->slug('-');
         Role::create($data);
         Session::flash('record_created', 'Your request has been successfully created');
         return back();
     }
 
+    public function showusers($show_slug)
+    {
+        $role_id = Role::where('slug', '=', $show_slug)->get()[0]->id;
+        $role = Role::find($role_id);
+        return $role->users;
+
+        return view('admin.roles.users', compact(['users']));
+
+
+
+    }
 }

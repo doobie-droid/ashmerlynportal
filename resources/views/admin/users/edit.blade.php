@@ -97,7 +97,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Date of Birth</label>
-                        <input name="date_of_birth" type="date"
+                        <input name="date_of_birth" type="date" min="{{$yearstart.'-01-01'}}" max="{{($yearstart + 6).'-12-31'}}"
                                class="form-control @error('date_of_birth') is-invalid @enderror" id="date_of_birth"
                                value="{{$user->date_of_birth}}">
                         @error('date_of_birth')
