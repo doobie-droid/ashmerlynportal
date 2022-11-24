@@ -30,8 +30,27 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
+        return $user->id == $model->id;
     }
 
+    public function adminAuth(User $user)
+    {
+        //
+       return $user->userHasRole('administrator') && $user->status == 1;
+
+    }
+    public function parentAuth(User $user){
+
+        return $user->userHasRole('parent') && $user->status == 1;
+    }
+    public function teacherAuth(User $user){
+
+        return $user->userHasRole('teacher') && $user->status == 1;
+    }
+    public function studentAuth(User $user){
+
+        return $user->userHasRole('student') && $user->status == 1;
+    }
     /**
      * Determine whether the user can create models.
      *
@@ -53,6 +72,7 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         //
+        return $user->id == $model->id;
     }
 
     /**

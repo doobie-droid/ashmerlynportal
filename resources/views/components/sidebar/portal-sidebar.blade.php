@@ -22,18 +22,40 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
+    @if(\Illuminate\Support\Facades\Auth::user()->userHasRole('administrator'))
     <div class="sidebar-heading">
-        User Role
+        Administrator
     </div>
+    @elseif(\Illuminate\Support\Facades\Auth::user()->userHasRole('teacher'))
+        <div class="sidebar-heading">
+            Teacher
+        </div>
+    @elseif(\Illuminate\Support\Facades\Auth::user()->userHasRole('student'))
+        <div class="sidebar-heading">
+            Student
+        </div>
+    @elseif(\Illuminate\Support\Facades\Auth::user()->userHasRole('parent'))
+        <div class="sidebar-heading">
+            Parent
+        </div>
+    @else
+        <div class="sidebar-heading">
+            No Currently Assigned Role
+        </div>
+    @endif
 
     <!-- Nav Item - Pages Collapse Menu -->
+    @can('studentAuth',\App\Models\User::class)
     <x-sidebar.student-sidebar>
 
     </x-sidebar.student-sidebar>
+    @endcan
+    @can('teacherAuth',\App\Models\User::class)
 
     <x-sidebar.teacher-sidebar>
 
     </x-sidebar.teacher-sidebar>
+    @endcan
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseTwo">
@@ -47,14 +69,18 @@
             </div>
         </div>
     </li>
+    @can('parentAuth',\App\Models\User::class)
     <x-sidebar.parent-sidebar>
 
     </x-sidebar.parent-sidebar>
+    @endcan
 
+
+    @can('adminAuth',\App\Models\User::class)
     <x-sidebar.admin-sidebar>
 
     </x-sidebar.admin-sidebar>
-
+    @endcan
 
 
 

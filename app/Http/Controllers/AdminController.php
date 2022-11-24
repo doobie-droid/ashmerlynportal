@@ -61,38 +61,38 @@ class AdminController extends Controller
      */
     public function passwordedit(User $user)
     {
-        if (auth::user()->userHasRole('administrator')) {
-            return view('admin.users.admin-password-edit', compact('user'));
-        } else {
-            abort(401);
-        }
+        $this->authorize('adminAuth', User::class);
+        return view('admin.users.admin-password-edit', compact('user'));
 
 
     }
 
     public function passwordupdate(User $user)
     {
-
-        if (auth::user()->userHasRole('administrator')) {
-            if($user->userHasRole('student')){
-                $inputs = Request()->validate([
-                    'password' => ['required', 'string', 'confirmed', 'min:6'],
-                ]);
-
-            }else{
-                $inputs = Request()->validate([
-                    'password' => ['required', 'string', 'confirmed', Password::min(8)
-                        ->symbols()
-                        ->uncompromised()],
-                ]);
-            }
+        $this->authorize('adminAuth', User::class);
+        if ($user->userHasRole('administrator')) {
+            $inputs = Request()->validate([
+                'password' => ['required', 'string', 'confirmed', Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()],
+            ]);
+        } elseif ($user->userHasRole('teacher')) {
+            $inputs = Request()->validate([
+                'password' => ['required', 'string', 'confirmed', Password::min(8)
+                    ->mixedCase()
+                    ->uncompromised()],
+            ]);
         } else {
-            abort(401);
+            $inputs = Request()->validate([
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ]);
+
         }
         User::where('id', $user->id)->update(['password' => Hash::make($inputs['password'])]);
         Session::flash('password_updated', 'Your password has been successfully changed');
         return back();
-
 
     }
 
