@@ -36,10 +36,10 @@ class RoleController extends Controller
 
     public function showusers($show_slug)
     {
-        $role_id = Role::where('slug', '=', $show_slug)->get()[0]->id;
-        $role = Role::find($role_id);
-        return $role->users;
-
+        $users = Role::where('slug',$show_slug)
+            ->with('users',function ($query){
+                $query->where('status',1);
+            })->get()->first()->users;
         return view('admin.roles.users', compact(['users']));
 
 
