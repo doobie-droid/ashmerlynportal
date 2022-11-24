@@ -35,7 +35,7 @@
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{$user->surname.' '.$user->firstname}}</td>
+                                    <td><a href="{{route('user.profile.edit',$user->id)}}">{{$user->surname.' '.$user->firstname}}</a></td>
                                     <td><img height="60px" src="{{$user->avatar}} alt='Profile Pic'"></td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->gender}}</td>
