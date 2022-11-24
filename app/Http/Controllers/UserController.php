@@ -30,8 +30,7 @@ class UserController extends Controller
 
     public function activeindex()
     {
-        $users = DB::table('users')
-            ->orderBy('id', 'desc')
+        $users = User::orderBy('id', 'desc')
             ->where('id', '!=', Auth::id())
             ->Where('status', '=', 1)
             ->get();
@@ -111,15 +110,13 @@ class UserController extends Controller
     {
         //
         if ($status == 'all'){
-            $users = DB::table('users')
-                ->where("firstname", "LIKE", "%" . $request['query'] . "%")
+            $users = User::where("firstname", "LIKE", "%" . $request['query'] . "%")
                 ->orWhere("middlename", "LIKE", "%" . $request['query'] . "%")
                 ->orWhere("surname", "LIKE", "%" . $request['query'] . "%")
                 ->orderBy('id', 'DESC')->paginate(5);
         }else {
             $statusvalue = 0;
-            $users = DB::table('users')
-                ->where([["firstname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
+            $users = User::where([["firstname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
                 ->orWhere([["middlename", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
                 ->orWhere([["surname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
                 ->orderBy('id', 'DESC')->paginate(5);
