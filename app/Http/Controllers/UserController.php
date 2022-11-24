@@ -25,7 +25,7 @@ class UserController extends Controller
         //
         $users = User::where('id', '!=', Auth::id())->orderBy('id', 'DESC')->paginate(20);
         $status = 'all';
-        return view('admin.users.index', compact(['users','status']));
+        return view('admin.users.index', compact(['users', 'status']));
     }
 
     public function activeindex()
@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $users = User::where([['id', '!=', Auth::id()], ['status', '=', 0]])->orderBy('id', 'DESC')->paginate(10);
         $status = 'deactivated';
-        return view('admin.users.deactivated-index', compact(['users','status']));
+        return view('admin.users.deactivated-index', compact(['users', 'status']));
     }
 
     /**
@@ -106,15 +106,15 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$status)
+    public function show(Request $request, $status)
     {
         //
-        if ($status == 'all'){
+        if ($status == 'all') {
             $users = User::where("firstname", "LIKE", "%" . $request['query'] . "%")
                 ->orWhere("middlename", "LIKE", "%" . $request['query'] . "%")
                 ->orWhere("surname", "LIKE", "%" . $request['query'] . "%")
                 ->orderBy('id', 'DESC')->paginate(5);
-        }else {
+        } else {
             $statusvalue = 0;
             $users = User::where([["firstname", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
                 ->orWhere([["middlename", "LIKE", "%" . $request['query'] . "%"], ['status', '=', $statusvalue]])
@@ -126,10 +126,11 @@ class UserController extends Controller
         if (count($users) == 0) {
             Session::flash('message', 'Sorry! there were no records found');
         }
-        return view('admin.users.index', compact(['users','status']));
+        return view('admin.users.index', compact(['users', 'status']));
     }
 
-    public function showdeactivated(){
+    public function showdeactivated()
+    {
 
     }
 
@@ -176,47 +177,41 @@ class UserController extends Controller
 
     public function passwordedit(User $user)
     {
-        if (auth::user()->id == $user->id) {
-            return view('admin.users.password-edit', compact('user'));
-        } else {
-            abort(401);
-        }
+        $this->authorize('view', $user);
+        return view('admin.users.password-edit', compact('user'));
 
 
     }
 
     public function passwordupdate(User $user)
     {
-        if (auth::user()->id == $user->id) {
-            if ($user->userHasRole('administrator')) {
-                $inputs = Request()->validate([
-                    'currentpassword' => 'current_password',
-                    'password' => ['required', 'string', 'confirmed', Password::min(8)
-                        ->mixedCase()
-                        ->numbers()
-                        ->symbols()
-                        ->uncompromised()],
-                ]);
-            } elseif ($user->userHasRole('teacher')) {
-                $inputs = Request()->validate([
-                    'currentpassword' => 'current_password',
-                    'password' => ['required', 'string', 'confirmed', Password::min(8)
-                        ->mixedCase()
-                        ->uncompromised()],
-                ]);
-            } else {
-                $inputs = Request()->validate([
-                    'currentpassword' => 'current_password',
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                ]);
-
-            }
-            User::where('id', auth::user()->id)->update(['password' => Hash::make($inputs['password'])]);
-            Session::flash('password_updated', 'Your password has been successfully changed');
-            return back();
+        $this->authorize("update",$user);
+        if ($user->userHasRole('administrator')) {
+            $inputs = Request()->validate([
+                'currentpassword' => 'current_password',
+                'password' => ['required', 'string', 'confirmed', Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()],
+            ]);
+        } elseif ($user->userHasRole('teacher')) {
+            $inputs = Request()->validate([
+                'currentpassword' => 'current_password',
+                'password' => ['required', 'string', 'confirmed', Password::min(8)
+                    ->mixedCase()
+                    ->uncompromised()],
+            ]);
         } else {
-            abort(401);
+            $inputs = Request()->validate([
+                'currentpassword' => 'current_password',
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ]);
+
         }
+        User::where('id', auth::user()->id)->update(['password' => Hash::make($inputs['password'])]);
+        Session::flash('password_updated', 'Your password has been successfully changed');
+        return back();
 
 
     }
