@@ -61,7 +61,7 @@ class AdminController extends Controller
      */
     public function passwordedit(User $user)
     {
-        if (!auth::user()->userHasRole('administrator')) {
+        if (auth::user()->userHasRole('administrator')) {
             return view('admin.users.admin-password-edit', compact('user'));
         } else {
             abort(401);
@@ -73,7 +73,7 @@ class AdminController extends Controller
     public function passwordupdate(User $user)
     {
 
-        if (!auth::user()->userHasRole('administrator')) {
+        if (auth::user()->userHasRole('administrator')) {
             if($user->userHasRole('student')){
                 $inputs = Request()->validate([
                     'password' => ['required', 'string', 'confirmed', 'min:6'],
