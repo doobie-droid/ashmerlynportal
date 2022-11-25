@@ -2,7 +2,7 @@
 
 
     @section('content')
-        <div class="card shadow mb-4">
+        <div class="card  mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Deactivated Users</h6>
                 <br>
@@ -69,7 +69,9 @@
                 </div>
             </div>
         </div>
-        {{$users->links()}}
+        <div class=" mb-4 overflow-scroll">
+            <div class=" py-3">   {{$users->onEachSide(2)->links()}}</div>
+        </div>
     @endsection
 
 </x-portal-layout>

@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
+Route::get('/admin/users/activities/log','App\Http\Controllers\ActivityController@index')->name('activity.log');
+
 Route::get('/admin/users','App\Http\Controllers\UserController@index')->name('user.index');
 
 Route::get('/admin/users/{status}/search','App\Http\Controllers\UserController@show')->name('user.show');

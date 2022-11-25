@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -95,6 +96,10 @@ class UserController extends Controller
         } else {
             Session::flash('record_created', 'Your user has been successfully created without a role');
         }
+        Activity::create([
+            'type'=>'user',
+            'action'=> auth::user()->surname.' '.auth::user()->firstname.' just created a user with details '.$user->surname.' '.$user->firstname.' at '.Carbon::now()
+        ]);
         return back();
 
 
@@ -171,6 +176,10 @@ class UserController extends Controller
             $inputs['avatar'] = request('avatar')->store('images');
         }
         $user->update($inputs);
+        Activity::create([
+            'type'=>'user',
+            'action'=> auth::user()->surname.' '.auth::user()->firstname.' just UPDATED a user with details '.$user->surname.' '.$user->firstname.' at '.Carbon::now()
+        ]);
         Session::flash('record_updated', 'Your user: ' . $inputs['surname'] . ' ' . $inputs['firstname'] . ' has been successfully updated');
         return back();
     }
@@ -210,6 +219,10 @@ class UserController extends Controller
 
         }
         User::where('id', auth::user()->id)->update(['password' => Hash::make($inputs['password'])]);
+        Activity::create([
+            'type'=>'password',
+            'action'=> auth::user()->surname.' '.auth::user()->firstname.' with id of '.auth::user()->username.' just changed their own password at '.Carbon::now()
+        ]);
         Session::flash('password_updated', 'Your password has been successfully changed');
         return back();
 
@@ -237,8 +250,13 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         //
-        $user = User::where('id', $request->id)->delete();
+        $user = User::find($request->id);
+        User::where('id', $request->id)->delete();
         Session::flash('message', 'The user has been deleted. ');
+        Activity::create([
+            'type'=>'destroy',
+            'action'=> auth::user()->surname.' '.auth::user()->firstname.' just deleted a user with details '.$user->surname.' '.$user->firstname.' at '.Carbon::now()
+        ]);
         return back();
     }
 }

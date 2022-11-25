@@ -1,31 +1,25 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion  " id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="https://ashmerlynintsch.com/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+       href="https://ashmerlynintsch.com/">
         <div class="sidebar-brand-icon rotate-n-15">
         </div>
-        <img height="20px" src="{{asset('logo.png')}}"><div class="sidebar-brand-text mx-3">Ash Merlyn</div>
+        <img height="20px" src="{{asset('logo.png')}}">
+        <div class="sidebar-brand-text mx-3">Ash Merlyn</div>
     </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{route('home')}}">
-            <i class="fas  fa-fw fa-id-card-alt " ></i>
-            <span>BioData</span></a>
-    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
     @if(\Illuminate\Support\Facades\Auth::user()->userHasRole('administrator'))
-    <div class="sidebar-heading">
-        Administrator
-    </div>
+        <div class="sidebar-heading">
+            Admin
+        </div>
     @elseif(\Illuminate\Support\Facades\Auth::user()->userHasRole('teacher'))
         <div class="sidebar-heading">
             Teacher
@@ -46,19 +40,20 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     @can('studentAuth',\App\Models\User::class)
-    <x-sidebar.student-sidebar>
+        <x-sidebar.student-sidebar>
 
-    </x-sidebar.student-sidebar>
+        </x-sidebar.student-sidebar>
     @endcan
     @can('teacherAuth',\App\Models\User::class)
 
-    <x-sidebar.teacher-sidebar>
+        <x-sidebar.teacher-sidebar>
 
-    </x-sidebar.teacher-sidebar>
+        </x-sidebar.teacher-sidebar>
     @endcan
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+           aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-list"></i><span>Honour's Roll</span>
         </a>
         <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
@@ -70,16 +65,16 @@
         </div>
     </li>
     @can('parentAuth',\App\Models\User::class)
-    <x-sidebar.parent-sidebar>
+        <x-sidebar.parent-sidebar>
 
-    </x-sidebar.parent-sidebar>
+        </x-sidebar.parent-sidebar>
     @endcan
 
 
     @can('adminAuth',\App\Models\User::class)
-    <x-sidebar.admin-sidebar>
+        <x-sidebar.admin-sidebar>
 
-    </x-sidebar.admin-sidebar>
+        </x-sidebar.admin-sidebar>
     @endcan
 
 
@@ -92,6 +87,7 @@
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
+
 
 </ul>
 <!-- End of Sidebar -->
