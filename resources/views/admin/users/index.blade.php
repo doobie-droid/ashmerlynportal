@@ -6,7 +6,7 @@
         @if(\Illuminate\Support\Facades\Session::has('message'))
             <div class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('message')}}</div>
         @endif
-        <div class="card shadow mb-4">
+        <div class="card mb-4">
 
             <div class="card-header py-3">
                 @if($status == 'all')
@@ -109,7 +109,9 @@
                 </div>
             </div>
         </div>
-        {{$users->links()}}
+        <div class=" mb-4 overflow-scroll">
+            <div class=" py-3">   {{$users->onEachSide(2)->links()}}</div>
+        </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">

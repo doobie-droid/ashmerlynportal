@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,6 +93,10 @@ class AdminController extends Controller
 
         }
         User::where('id', $user->id)->update(['password' => Hash::make($inputs['password'])]);
+        Activity::create([
+            'type'=>'password',
+            'action'=> auth::user()->surname.' '.auth::user()->firstname.' just changed the password for '.$user->surname.' '.$user->firstname.' at '.Carbon::now()
+        ]);
         Session::flash('password_updated', 'Your password has been successfully changed');
         return back();
 

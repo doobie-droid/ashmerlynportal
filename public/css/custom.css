@@ -1,0 +1,12 @@
+.show-element{
+    z-index: 2000;
+}
+
+.ghost{
+    display: none;
+}
+
+#contentdata {
+    height: 80vh;
+}
+

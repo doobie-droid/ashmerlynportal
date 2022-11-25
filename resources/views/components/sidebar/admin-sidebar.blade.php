@@ -11,6 +11,22 @@
 </div>
 
 <!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item show-element">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+    </a>
+    <div id="collapseUsers" class="collapse " aria-labelledby="headingUsers" data-parent="#accordionSidebar" >
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('user.create')}}"> <i class="fas fa-user-plus"></i> Add New User</a>
+            <a class="collapse-item" href="{{route('role.index')}}"><i class="fas fa-user-tie"></i> View By Roles</a>
+            <a class="collapse-item" href="{{route('user.active-index')}}"> <i class="fas fa-user-check"></i>View All Active Users</a>
+            <a class="collapse-item" href="{{route('user.inactive-index')}}"> <i class="fas fa-user-slash"></i>View All Inactive Users</a>
+
+            <a class="collapse-item" href="{{route('user.index')}}"> <i class="fas fa-users"></i>View All Users</a>
+        </div>
+    </div>
+</li>
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClasses" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
@@ -46,20 +62,5 @@
         </div>
     </div>
 </li>
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-users"></i>
-        <span>Users</span>
-    </a>
-    <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{route('user.create')}}"> <i class="fas fa-user-plus"></i> Add New User</a>
-            <a class="collapse-item" href="{{route('role.index')}}"><i class="fas fa-user-tie"></i> View By Roles</a>
-            <a class="collapse-item" href="{{route('user.active-index')}}"> <i class="fas fa-user-check"></i>View All Active Users</a>
-            <a class="collapse-item" href="{{route('user.inactive-index')}}"> <i class="fas fa-user-slash"></i>View All Inactive Users</a>
 
-            <a class="collapse-item" href="{{route('user.index')}}"> <i class="fas fa-users"></i>View All Users</a>
-        </div>
-    </div>
-</li>
 
