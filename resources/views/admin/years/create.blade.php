@@ -20,7 +20,7 @@
                 Sort Class Arms
             </a>
         </p>
-        <div class="collapse" id="collapseAddDetails">
+        <div class="collapse " id="collapseAddDetails">
             <div class="card card-body">
                 <div class="card-header" id="headingClass">
                     <a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseAddClass"
@@ -139,11 +139,11 @@
             @if($actual_classes)
                 @foreach($actual_classes as $class)
                     <div class="card shadow">
-                        <div class="card-header" id="{{'heading'.$class->slug}}">
+                        <div class="card-header" id="{{'heading'.$class->slug}}" data-toggle="collapse"
+                             data-target="{{'#collapse'.$class->slug}}" aria-controls="{{'collapse'.$class->slug}}">
                             <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse"
-                                        data-target="{{'#collapse'.$class->slug}}"
-                                        aria-expanded="false" aria-controls="{{'collapse'.$class->slug}}">
+                                <button class="btn btn-link"
+                                        aria-expanded="false" >
                                     {{'Year '.$class->slug}}
                                 </button>
                             </h5>

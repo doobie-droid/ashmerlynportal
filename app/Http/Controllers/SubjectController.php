@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Arm;
 use App\Models\Subject;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -12,7 +13,10 @@ class SubjectController extends Controller
 {
     //
     public function create(){
-        return view('admin.subjects.create');
+        $actual_classes = Year::all();
+        $possible_classes = range(1, 12);
+        $possible_classes_words = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+        return view('admin.subjects.create',compact(['actual_classes','possible_classes','possible_classes_words']));
     }
 
     public function store(Request $request){
