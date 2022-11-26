@@ -59,7 +59,7 @@
     </a>
     <div id="collapseSubjects" class="collapse" aria-labelledby="headingSubjects" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="login.html"> View Subjects</a>
+            <a class="collapse-item" href="{{route('subject.create')}}"> Add Subjects</a>
         </div>
     </div>
 </li>

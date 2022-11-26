@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Arm extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'slug',
+        'rank'
+    ];
 }
