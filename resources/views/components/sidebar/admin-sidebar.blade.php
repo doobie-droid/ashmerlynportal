@@ -35,7 +35,8 @@
     <div id="collapseClasses" class="collapse" aria-labelledby="headingClasses" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Classes:</h6>
-            <a class="collapse-item" href="login.html"> View Classes</a>
+            <a class="collapse-item" href="{{route('class.index')}}"> View Classes</a>
+            <a class="collapse-item" href="{{route('class.create')}}"> Create/Modify Classes</a>
         </div>
     </div>
 </li>
