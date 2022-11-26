@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('years', function (Blueprint $table) {
             $table->id();
             $table->integer('name')->unique();
-            $table->string('slug')->unique();
+            $table->integer('slug')->unique();
             $table->timestamps();
         });
     }
