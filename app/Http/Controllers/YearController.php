@@ -24,12 +24,10 @@ class YearController extends Controller
 
     public function store(Request $request){
         $inputs = Request()->validate([
-            'class_name' => ['required', 'unique:years,name'],
-            'class_slug' => ['required', 'unique:years,slug'],
+            'name' => ['required', 'unique:years'],
+            'slug' => ['required', 'unique:years'],
             'administratortoken' => ["required", "max:255", "regex:(ashmerlyn890)"]
         ]);
-        $inputs['name'] = $inputs['class_name'];
-        $inputs['slug'] = $inputs['class_slug'];
         $possible_classes_words = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
         //trying to check if the value of the class matches in words and digits
         if($inputs['slug']== $possible_classes_words[intval($inputs['name']) - 1]){
