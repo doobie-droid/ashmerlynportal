@@ -17,7 +17,7 @@ return new class extends Migration
             $table->primary(['year_id','subject_id']);
             $table->foreignId('year_id')->constrained()->onDelete('cascade');
             $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->constrained();
             $table->timestamps();
         });
     }

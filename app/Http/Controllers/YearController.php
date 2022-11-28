@@ -15,6 +15,10 @@ class YearController extends Controller
 
         return view('admin.years.index', );
     }
+    public function armindex(){
+        return view ('admin.years.armindex');
+    }
+
 
     public function create(){
         $actual_classes = Year::orderBy('name','asc')->get();
@@ -53,7 +57,7 @@ class YearController extends Controller
     public function subjectdetach(Year $year){
         $subject = Subject::find(request()->id);
         $year->subjects()->detach($subject);
-        Session::flash('success_message', $subject->name.' has been removed from  Year '.$year->slug);
+        Session::flash('error_message', $subject->name.' has been removed from  Year '.$year->slug);
         return back();
     }
 
