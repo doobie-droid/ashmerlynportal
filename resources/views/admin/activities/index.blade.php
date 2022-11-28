@@ -12,14 +12,12 @@
                 <div class="card-body ">
                     @if($password_activities)
                         @foreach($password_activities as $password_activity)
-                            {{$password_activity->action}}<br><br>
+                            {{($loop->index + 1).' '.$password_activity->action}}<br><br>
                         @endforeach
+                            Click to see <a href="{{route('activity.detail',$password_activities[0]->type)}}">more....</a>
                     @else
                         No passwords have been changed
                     @endif
-                    <div class=" mb-4 overflow-scroll">
-                        <div class=" py-3">   {{$password_activities->onEachSide(2)->links()}}</div>
-                    </div>
 
                 </div>
             </div>
@@ -35,14 +33,13 @@
                 <div class="card-body">
                     @if($user_activities)
                         @foreach($user_activities as $user_activity)
-                            {{$user_activity->action}}<br><br>
+                            {{($loop->index + 1).' '.$user_activity->action}}<br><br>
                         @endforeach
+                            Click to see <a href="{{route('activity.detail',$user_activities[0]->type)}}">more....</a>
                     @else
-                        No passwords have been changed
+                        No users have been changed
                     @endif
-                    <div class=" mb-4 overflow-scroll">
-                        <div class=" py-3">   {{$user_activities->onEachSide(2)->links()}}</div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -57,14 +54,13 @@
                 <div class="card-body">
                     @if($role_activities)
                         @foreach($role_activities as $role_activity)
-                            {{$role_activity->action}}<br><br>
+                            {{($loop->index + 1).' '.$role_activity->action}}<br><br>
                         @endforeach
+                            Click to see <a href="{{route('activity.detail',$role_activities[0]->type)}}">more....</a>
                     @else
-                        No passwords have been changed
+                        No roles have been modified or assigned
                     @endif
-                    <div class=" mb-4 overflow-scroll">
-                        <div class=" py-3">   {{$role_activities->onEachSide(2)->links()}}</div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -79,14 +75,14 @@
                 <div class="card-body">
                     @if($destroy_activities)
                         @foreach($destroy_activities as $destroy_activity)
-                            {{$destroy_activity->action}}<br><br>
+                            {{($loop->index + 1).' '.$destroy_activity->action}}<br><br>
+
                         @endforeach
+                            Click to see <a href="{{route('activity.detail',$destroy_activities[0]->type)}}">more....</a>
                     @else
-                        No passwords have been changed
+                        No record has been deleted
                     @endif
-                    <div class=" mb-4 overflow-scroll">
-                        <div class=" py-3">   {{$destroy_activities->onEachSide(2)->links()}}</div>
-                    </div>
+
                 </div>
             </div>
         </div>
