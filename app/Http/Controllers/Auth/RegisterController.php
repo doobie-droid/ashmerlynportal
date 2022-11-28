@@ -50,6 +50,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $admin_token = env('ADMIN_TOKEN');
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:255','unique:users'],
             'firstname'=> ['required','string','max:255'],
@@ -58,7 +59,7 @@ class RegisterController extends Controller
             'email' =>  'nullable|email|max:255|unique:users',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'gender'=>['required'],
-            'administratortoken' => ["required" , "max:255", "regex:(ashmerlyn890)"]
+            'administratortoken' => ["required" , "max:255", "regex:($admin_token)"]
         ]);
     }
 
