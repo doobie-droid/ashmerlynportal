@@ -29,10 +29,11 @@ class YearController extends Controller
     }
 
     public function store(Request $request){
+        $admin_token = env('ADMIN_TOKEN');
         $inputs = Request()->validate([
             'name' => ['required', 'unique:years'],
             'slug' => ['required', 'unique:years'],
-            'administratortoken' => ["required", "max:255", "regex:(ashmerlyn890)"]
+            'administratortoken' => ["required", "max:255", "regex:($admin_token)"]
         ]);
         $possible_classes_words = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
         //trying to check if the value of the class matches in words and digits

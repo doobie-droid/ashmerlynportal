@@ -23,9 +23,10 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        $admin_token = env('ADMIN_TOKEN');
         $inputs = Request()->validate([
             'name' => ['required', 'string', 'unique:roles'],
-            'administratortoken' => ["required", "max:255", "regex:(ashmerlyn890)"]
+            'administratortoken' => ["required", "max:255", "regex:($admin_token)"]
         ]);
         $data['name'] = Str::ucfirst($inputs['name']);
         $data['slug'] = Str::of(Str::lower($inputs['name']))->slug('-');
