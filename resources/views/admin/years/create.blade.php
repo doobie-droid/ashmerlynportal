@@ -22,7 +22,8 @@
         </p>
         <div class="collapse " id="collapseAddDetails">
             <div class="card card-body">
-                <div class="card-header" id="headingClass">
+                <div class="card-header" id="headingClass" data-toggle="collapse" href="#collapseAddClass"
+                     aria-expanded="false" aria-controls="collapseAddClass">
                     <a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseAddClass"
                        aria-expanded="true" aria-controls="collapseAddClass">Create New Class</a>
 
@@ -72,7 +73,8 @@
                     </div>
                     <br>
                 </div>
-                <div class="card-header" id="headingArm">
+                <div class="card-header" id="headingArm" data-toggle="collapse" href="#collapseAddArm"
+                     aria-expanded="false" aria-controls="collapseAddArm">
                     <a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseAddArm"
                        aria-expanded="false" aria-controls="collapseAddArm">Create New Arm</a>
                 </div>
@@ -103,7 +105,9 @@
                     </div>
                     <br>
                 </div>
-                <div class="card-header" id="headingSubject">
+                <div class="card-header" id="headingSubject" data-toggle="collapse" href="#collapseAddSubject"
+                     aria-expanded="false"
+                     aria-controls="collapseAddSubject">
                     <a class="btn btn-link" data-toggle="collapse" href="#collapseAddSubject" aria-expanded="false"
                        aria-controls="collapseAddSubject">Create New Subject</a>
                 </div>
@@ -111,7 +115,8 @@
                 <div class="collapse" id="collapseAddSubject" class="collapse show" aria-labelledby="headingSubject"
                      data-parent="#collapseAddDetails">
                     <br>
-                    <div class="card card-body"> <form action="{{route('subject.store')}}" method="POST">
+                    <div class="card card-body">
+                        <form action="{{route('subject.store')}}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="subject_name">Subject Name</label>
@@ -129,7 +134,8 @@
                                 @enderror
                             </div>
                             <button class="btn btn-primary" type="submit">Add Arm</button>
-                        </form></div>
+                        </form>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -143,7 +149,7 @@
                              data-target="{{'#collapse'.$class->slug}}" aria-controls="{{'collapse'.$class->slug}}">
                             <h5 class="mb-0">
                                 <button class="btn btn-link"
-                                        aria-expanded="false" >
+                                        aria-expanded="false">
                                     {{'Year '.$class->slug}}
                                 </button>
                             </h5>
@@ -152,20 +158,52 @@
                         <div id="{{'collapse'.$class->slug}}" class="collapse"
                              aria-labelledby="{{'heading'.$class->slug}}" data-parent="#accordion">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid.
-                                3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-                                nesciunt
-                                laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                single-origin
-                                coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-                                wes
-                                anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                                Leggings
-                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
-                                haven't
-                                heard
-                                of them accusamus labore sustainable VHS.
+                                <div class="table-responsive">
+                                    <table class="table table-isactive">
+                                        <caption>List of subjects by class</caption>
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Modify</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($subjects as $subject)
+                                            <tr>
+                                                <th><input type="checkbox" onclick="return false"
+                                                           @if($class->subjects->contains($subject)) checked @endif >
+                                                </th>
+                                                <td class="  @if(!$class->subjects->contains($subject)) row-inactive @endif">{{$subject->name}}</td>
+                                                @if($class->subjects->contains($subject))
+                                                    <td>
+                                                        <form method="post" action="{{route('subject.detach',$class->id)}}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input hidden type="text" name="id" value="{{$subject->id}}">
+                                                            <button type="submit" class="btn btn-danger btn-circle "><i
+                                                                    class="fas fa-solid fa-plus fa-trash fa-bounce"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                @else
+                                                    <td>
+                                                        <form method="post" action="{{route('subject.attach',$class->id)}}">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input hidden  name="id" value="{{$subject->id}}">
+                                                            <button type="submit" class="btn btn-success btn-circle"><i
+                                                                    class="fas fa-plus"></i></button>
+
+                                                        </form>
+                                                    </td>
+                                                @endif
+
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
