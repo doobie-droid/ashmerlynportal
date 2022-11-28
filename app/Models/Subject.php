@@ -12,4 +12,8 @@ class Subject extends Model
         'name',
         'slug'
     ];
+
+    public function years(){
+        return $this->belongsToMany(Year::class)->withPivot('user_id')->withTimestamps();
+    }
 }

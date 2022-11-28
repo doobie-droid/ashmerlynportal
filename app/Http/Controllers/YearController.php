@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subject;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,10 +17,11 @@ class YearController extends Controller
     }
 
     public function create(){
-        $actual_classes = Year::all();
+        $actual_classes = Year::orderBy('name','asc')->get();
         $possible_classes = range(1, 12);
         $possible_classes_words = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
-        return view('admin.years.create', compact(['possible_classes','possible_classes_words','actual_classes']));
+        $subjects = Subject::all();
+        return view('admin.years.create', compact(['possible_classes','possible_classes_words','actual_classes','subjects']));
     }
 
     public function store(Request $request){
@@ -40,4 +42,20 @@ class YearController extends Controller
 
 
     }
+
+    public function subjectattach(Year $year){
+        $subject = Subject::find(request()->id);
+        $year->subjects()->attach($subject);
+        Session::flash('success_message', $subject->name.' has been added to Year '.$year->slug);
+        return back();
+    }
+
+    public function subjectdetach(Year $year){
+        $subject = Subject::find(request()->id);
+        $year->subjects()->detach($subject);
+        Session::flash('success_message', $subject->name.' has been removed from  Year '.$year->slug);
+        return back();
+    }
+
+
 }

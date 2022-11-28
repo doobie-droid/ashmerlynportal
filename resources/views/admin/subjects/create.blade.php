@@ -20,7 +20,8 @@
         </p>
         <div class="collapse show " id="collapseAddDetails">
             <div class="card card-body">
-                <div class="card-header" id="headingArm">
+                <div class="card-header" id="headingArm" data-toggle="collapse" href="#collapseAddArm"
+                     aria-expanded="false" aria-controls="collapseAddArm">
                     <a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseAddArm"
                        aria-expanded="false" aria-controls="collapseAddArm">Create New Arm</a>
                 </div>
@@ -51,7 +52,8 @@
                     </div>
                     <br>
                 </div>
-                <div class="card-header" id="headingSubject">
+                <div class="card-header" id="headingSubject" data-toggle="collapse" href="#collapseAddSubject" aria-expanded="false"
+                     aria-controls="collapseAddSubject">
                     <a class="btn btn-link" data-toggle="collapse" href="#collapseAddSubject" aria-expanded="false"
                        aria-controls="collapseAddSubject">Create New Subject</a>
                 </div>

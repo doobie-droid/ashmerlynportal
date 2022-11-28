@@ -8,5 +8,14 @@
 
 #contentdata {
     height: 80vh;
+    overflow-x :hidden !important;
+}
+
+.table-isactive  {
+    color: #000000;
+}
+.row-inactive {
+    background-color: #ececec;
+    color: #b9b9b9;
 }
 
