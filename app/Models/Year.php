@@ -16,4 +16,8 @@ class Year extends Model
     public function subjects(){
         return $this->belongsToMany(Subject::class)->withPivot('user_id')->withTimestamps();;
     }
+
+    public function arms(){
+        return $this->belongsToMany(Arm::class)->withPivot('user_id')->withTimestamps();
+    }
 }

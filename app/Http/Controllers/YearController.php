@@ -12,11 +12,11 @@ class YearController extends Controller
 {
     //
     public function index(){
-
-        return view('admin.years.index', );
+        return view('admin.years.index');
     }
     public function armindex(){
-        return view ('admin.years.armindex');
+        $years = Year::orderBy('name','asc')->get();
+        return view ('admin.years.armindex', compact(['years']));
     }
 
 
