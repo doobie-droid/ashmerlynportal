@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arm;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -26,6 +30,7 @@ class HomeController extends Controller
     {
 
         $loggedinuser = Auth::user();
-        return view('home',compact('loggedinuser'));
+        return view('home', compact('loggedinuser'));
     }
+
 }

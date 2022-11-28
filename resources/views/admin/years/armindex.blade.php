@@ -1,55 +1,38 @@
 <x-portal-layout>
 
     @section("content")
-
-        <div class="col-lg-6">
+        @if($years)
+        <div class="col-md-12">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
+
+                @foreach($years as $class)
                 <li class="nav-item">
-                    <a class="nav-link active" href="#home1" role="tab" data-toggle="tab">Home</a>
+                    <a class="nav-link @if($loop->index == 0)active @endif" href="{{'#year'.$class->name}}" role="tab" data-toggle="tab">{{'Year '.$class->slug}}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#profile1" role="tab" data-toggle="tab">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#messages1" role="tab" data-toggle="tab">Messages</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#settings1" role="tab" data-toggle="tab">Settings</a>
-                </li>
+                @endforeach
+
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <br>
-                <div role="tabpanel" class="tab-pane active" id="home1">
-                    <h4>Home</h4>
+                @foreach($years as $class)
+
+                <div role="tabpanel" class="tab-pane @if($loop->index == 0)active @endif" id="{{'year'.$class->name}}">
                     <p>
-                        1. These Bootstrap 4 Tabs work basically the same as the Bootstrap 3.x tabs.
+                        <br>
+                        Year {{$class->slug}} currently has 3 arms
                         <br>
                         <br>
                         <button class="btn btn-primary-outline btn-lg">Wow</button>
                     </p>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="profile1">
-                    <h4>Pro</h4>
-                    <p>
-                        2. Tabs are helpful to hide or collapse some addtional content.
-                    </p>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="messages1">
-                    <h4>Messages</h4>
-                    <p>
-                        3. You can really put whatever you want into the tab pane.
-                    </p>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="settings1">
-                    <h4>Settings</h4>
-                    <p>
-                        4. Some of the Bootstrap 3.x components like well and panel have been dropped for the new card component.
-                    </p>
-                </div>
+                @endforeach
+
             </div>
         </div>
+        @else
+            <h1>You have not yet created any classes. Click on the class icon in the sidebar to add classes</h1>
+        @endif
     @endsection
 </x-portal-layout>
