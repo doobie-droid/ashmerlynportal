@@ -2,9 +2,9 @@
 
     @section("content")
         @if($years)
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs col-md-12" role="tablist">
 
                 @foreach($years as $class)
                 <li class="nav-item">
