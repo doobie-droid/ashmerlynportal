@@ -1,3 +1,13 @@
+@media screen {
+
+}
+
+@media screen and (max-width: 600px) {
+    .mobile-overflow {
+        overflow: scroll;
+    }
+}
+
 .show-element{
     z-index: 2000;
 }
@@ -18,4 +28,7 @@
     background-color: #ececec;
     color: #b9b9b9;
 }
+
+
+
 
