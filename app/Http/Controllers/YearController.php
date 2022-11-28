@@ -14,9 +14,9 @@ class YearController extends Controller
     public function index(){
         return view('admin.years.index');
     }
-    public function armindex(){
+    public function armindex($year_id){
         $years = Year::orderBy('name','asc')->get();
-        return view ('admin.years.armindex', compact(['years']));
+        return view ('admin.years.armindex', compact(['years','year_id']));
     }
 
 
