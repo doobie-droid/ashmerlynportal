@@ -133,7 +133,8 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button class="btn btn-primary" type="submit">Add Arm</button>
+                            <button class="btn btn-primary" type="submit">Add Subject <i
+                                    class="fas fa-solid fa-plus "></i></button>
                         </form>
                     </div>
                     <br>
@@ -160,7 +161,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-isactive">
-                                        <caption>List of subjects by class</caption>
+                                        <caption><a href="{{route('class.index.arm',$class->id)}}">Modify Arms</a></caption>
                                         <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -182,7 +183,7 @@
                                                             @method('DELETE')
                                                             <input hidden type="text" name="id" value="{{$subject->id}}">
                                                             <button type="submit" class="btn btn-danger btn-circle "><i
-                                                                    class="fas fa-solid fa-plus fa-trash fa-bounce"></i>
+                                                                    class="fas fa-solid  fa-trash "></i>
                                                             </button>
                                                         </form>
                                                     </td>
