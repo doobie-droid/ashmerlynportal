@@ -1,5 +1,6 @@
 <x-portal-layout>
+
     @section('content')
-    <h1>This is the page for viewing classes</h1>
+        <h1>You come here to assign a subject teacher to a subject</h1>
     @endsection
 </x-portal-layout>

@@ -32,8 +32,9 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-        Activity::factory()->count(40)->create();
+
         if(count(Activity::all()) <= 40){
+            Activity::factory()->count(40)->create();
             $elements = [1,2,3,4,5,6,7,8,9];
             //for some reason which I am yet to figure out, calling the factory 7 times make the factory repeat the
             //exact same action in the same state, so there are problems because most of the name fields must be unique
@@ -49,13 +50,13 @@ class DatabaseSeeder extends Seeder
             // and attaches it to a year
             Year::all()->each(function ($year) use ($subjects) {
                 $year->subjects()->attach(
-                    $subjects->random(rand(1, 3))->pluck('id')->toArray()
+                    $subjects->random(rand(7, 9))->pluck('id')->toArray()
                 );
             });
             //populate the year arm pivot table
             Year::all()->each(function ($year) use ($arms) {
                 $year->arms()->attach(
-                    $arms->random(rand(1, 3))->pluck('id')->toArray()
+                    $arms->random(rand(2, 5))->pluck('id')->toArray()
                 );
             });
         }

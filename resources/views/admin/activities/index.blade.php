@@ -10,7 +10,7 @@
             <!-- Card Content - Collapse -->
             <div class="collapse  " id="collapsePasswordCard" style="">
                 <div class="card-body ">
-                    @if($password_activities)
+                    @if(count($password_activities)>0)
                         @foreach($password_activities as $password_activity)
                             {{($loop->index + 1).' '.$password_activity->action}}<br><br>
                         @endforeach
@@ -31,7 +31,7 @@
             <!-- Card Content - Collapse -->
             <div class="collapse" id="collapseUserCreation" style="">
                 <div class="card-body">
-                    @if($user_activities)
+                    @if(count($user_activities)>0)
                         @foreach($user_activities as $user_activity)
                             {{($loop->index + 1).' '.$user_activity->action}}<br><br>
                         @endforeach
@@ -52,7 +52,7 @@
             <!-- Card Content - Collapse -->
             <div class="collapse" id="collapseRoleManagement" style="">
                 <div class="card-body">
-                    @if($role_activities)
+                    @if(count($role_activities)>0)
                         @foreach($role_activities as $role_activity)
                             {{($loop->index + 1).' '.$role_activity->action}}<br><br>
                         @endforeach
@@ -73,7 +73,7 @@
             <!-- Card Content - Collapse -->
             <div class="collapse" id="collapseRecordRemoval" style="">
                 <div class="card-body">
-                    @if($destroy_activities)
+                    @if(count($destroy_activities)>0)
                         @foreach($destroy_activities as $destroy_activity)
                             {{($loop->index + 1).' '.$destroy_activity->action}}<br><br>
 

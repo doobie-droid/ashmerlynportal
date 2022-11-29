@@ -41,7 +41,7 @@ class RoleController extends Controller
             ->with('users',function ($query){
                 $query->where('status',1);
             })->get()->first()->users;
-        return view('admin.roles.users', compact(['users']));
+        return view('admin.roles.users', compact(['users','show_slug']));
 
 
 
