@@ -32,10 +32,19 @@ class SubjectController extends Controller
     }
 
     public function assignsubjectedit(){
-        return view('admin.subjects.assign-teacher');
+        $years = Year::all();
+        $available_teachers = auth()->user()->availableTeachers('all');
+        return view('admin.subjects.assign-teacher',compact(['years','available_teachers']));
     }
 
     public function assignsubjectstore(){
-        return view('admin.subjects.assign-teacher');
+
+        $year = Year::find(request()->year_id);
+        $subject = Subject::find(request()->subject_id);
+        $year->subjects()->updateExistingPivot(request()->subject_id, [
+            'user_id' => request()->teacher_id,
+        ]);
+        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now teaching  Year '.$year->slug.' '.$subject->slug);
+        return back();
     }
 }
