@@ -78,15 +78,16 @@ class User extends Authenticatable
 
 
     }
-    public function getTeacherName($var){
+    public function getName($var){
         if($var == null){
-            return 'No teacher yet';
+            return 'null';
         }
         $user = User::find($var);
         return $user->surname.' '.$user->firstname;
     }
 
-    public function availableTeachers(){
+    public function availableTeachers($arms_or_subjects){
+        //
         $years = Year::all();
         //first get all the teachers
         $teachers = Role::where('slug', 'teacher')
@@ -95,8 +96,10 @@ class User extends Authenticatable
             })->get()->first()->users;
         //then get all the teachers who are unavailable
         $unavailable_teachers = [];
+        //the part that has class with arms is going to  be class with subjects if the
+        //variable(variable) that is being inputed changes from arms to subject
         foreach ($years as $class) {
-            foreach ($class->arms as $class_with_arm) {
+            foreach ($class->$arms_or_subjects as $class_with_arm) {
                 if ($class_with_arm->pivot->user_id) {
                     $unavailable_teachers[] = $class_with_arm->pivot->user_id;
                 }

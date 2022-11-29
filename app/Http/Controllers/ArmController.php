@@ -44,17 +44,19 @@ class ArmController extends Controller
     public function assignclassedit()
     {
         $years = Year::all();
-        $available_teachers = auth()->user()->availableTeachers();
-
-
-        return view('admin.arms.assign-teacher',compact(['years','available_teachers']));
+        $available_teachers = auth()->user()->availableTeachers('arms');
+        return view('admin.arms.assign-teacher', compact(['years', 'available_teachers']));
     }
 
-    public
-    function assignclassstore()
+    public function assignclassstore()
     {
-        return request();
-        return view('admin.arms.assign-teacher');
+        $year = Year::find(request()->year_id);
+        $arm = Arm::find(request()->arm_id);
+        $year->arms()->updateExistingPivot(request()->arm_id, [
+            'user_id' => request()->teacher_id,
+        ]);
+        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now a seated teacher in Year '.$year->slug.' '.$arm->slug);
+        return back();
     }
 
 }
