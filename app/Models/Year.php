@@ -20,4 +20,5 @@ class Year extends Model
     public function arms(){
         return $this->belongsToMany(Arm::class)->withPivot('user_id')->withTimestamps();
     }
+
 }
