@@ -17,28 +17,28 @@
                 <tbody>
                 @foreach($years as $class)
                     @foreach($class->arms as $class_with_arm)
-                <tr>
-                    <th scope="row">1</th>
-                    <th scope="row">{{'Year '.$class->slug}}</th>
-                    <th scope="row">{{$class_with_arm->name}}</th>
-                    <th scope="row">{{auth()->user()->getTeacherName($class_with_arm->pivot->user_id)}}</th>
-                    <td>
-                        <form id="special" method="post" action="{{route('assign.class.user.store','red')}}">
-                            @csrf
-                            @method('PATCH')
-                            <select  class="form-control" name="cars" id="cars" form="carform">
-                                <option value="volvo">Chika Okpara</option>
-                                <option value="saab">Pagou Wassou</option>
-                                <option value="opel">Jean Vieve</option>
-                                <option value="audi">Ochugwu Victor</option>
-                            </select>
-                        </form>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" type="submit" onclick='submitFunction()'>Submit</button>
-                    </td>
+                        <tr>
+                            <th scope="row">1</th>
+                            <th scope="row">{{'Year '.$class->slug}}</th>
+                            <th scope="row">{{$class_with_arm->name}}</th>
+                            <th scope="row">{{auth()->user()->getTeacherName($class_with_arm->pivot->user_id)}}</th>
+                            <td>
+                                <form id="special" method="post" action="{{route('assign.class.user.store','red')}}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select class="form-control" name="cars" id="cars" form="carform">
+                                        @foreach($available_teachers as $available_teacher)
+                                            <option value="{{$available_teacher}}">{{auth()->user()->getTeacherName($available_teacher)}}</option>
 
-                </tr>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" type="submit" onclick='submitFunction()'>Submit</button>
+                            </td>
+
+                        </tr>
                     @endforeach
                 @endforeach
                 </tbody>
@@ -47,7 +47,7 @@
     @endsection
     @section("scripts")
         <script>
-            function submitFunction(){
+            function submitFunction() {
                 let form = document.getElementById("special");
                 form.submit();
             }

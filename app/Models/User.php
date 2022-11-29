@@ -87,6 +87,31 @@ class User extends Authenticatable
     }
 
     public function availableTeachers(){
-        return 2;
+        $years = Year::all();
+        //first get all the teachers
+        $teachers = Role::where('slug', 'teacher')
+            ->with('users', function ($query) {
+                $query->where('status', 1)->select('id');
+            })->get()->first()->users;
+        //then get all the teachers who are unavailable
+        $unavailable_teachers = [];
+        foreach ($years as $class) {
+            foreach ($class->arms as $class_with_arm) {
+                if ($class_with_arm->pivot->user_id) {
+                    $unavailable_teachers[] = $class_with_arm->pivot->user_id;
+                }
+            }
+        }
+        //then get the teachers who are available
+        $available_teachers = [];
+        foreach ($teachers as $teacher) {
+
+            if (in_array($teacher->id, $unavailable_teachers)) {
+
+            } else {
+                $available_teachers[] = $teacher->id;
+            }
+        }
+        return $available_teachers;
     }
 }
