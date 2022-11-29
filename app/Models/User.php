@@ -14,6 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,16 +52,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany(Role::class);
     }
-    public function getAvatarAttribute($value){
-            return asset('storage/'.$value);
+
+    public function getAvatarAttribute($value)
+    {
+        return asset('storage/' . $value);
 
     }
 
-    public function userIs($gender){
-        if(Str::lower($this->gender) == Str::lower($gender)){
+    public function userIs($gender)
+    {
+        if (Str::lower($this->gender) == Str::lower($gender)) {
             return true;
         }
     }
@@ -78,15 +83,18 @@ class User extends Authenticatable
 
 
     }
-    public function getName($var){
-        if($var == null){
+
+    public function getName($var)
+    {
+        if ($var == null) {
             return 'null';
         }
         $user = User::find($var);
-        return $user->surname.' '.$user->firstname;
+        return $user->surname . ' ' . $user->firstname;
     }
 
-    public function availableTeachers($arms_or_subjects){
+    public function availableTeachers($arms_or_subjects)
+    {
         //
         $years = Year::all();
         //first get all the teachers
@@ -96,12 +104,14 @@ class User extends Authenticatable
             })->get()->first()->users;
         //then get all the teachers who are unavailable
         $unavailable_teachers = [];
-        //the part that has class with arms is going to  be class with subjects if the
-        //variable(variable) that is being inputed changes from arms to subject
-        foreach ($years as $class) {
-            foreach ($class->$arms_or_subjects as $class_with_arm) {
-                if ($class_with_arm->pivot->user_id) {
-                    $unavailable_teachers[] = $class_with_arm->pivot->user_id;
+        if (!$arms_or_subjects == 'all') {
+            //the part that has class with arms is going to  be class with subjects if the
+            //variable(variable) that is being inputed changes from arms to subject
+            foreach ($years as $class) {
+                foreach ($class->$arms_or_subjects as $class_with_arm) {
+                    if ($class_with_arm->pivot->user_id) {
+                        $unavailable_teachers[] = $class_with_arm->pivot->user_id;
+                    }
                 }
             }
         }

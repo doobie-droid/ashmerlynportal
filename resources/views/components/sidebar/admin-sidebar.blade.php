@@ -48,9 +48,9 @@
     <div id="collapseTeachers" class="collapse" aria-labelledby="headingTeachers" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Teachers</h6>
-            <a class="collapse-item" href="{{route('role.users.show','teacher')}}"> View Teachers</a>
-            <a class="collapse-item" href="{{route('assign.class.user.edit')}}"> Edit FormTeachers</a>
-            <a class="collapse-item" href="{{route('assign.subject.user.edit')}}"> Edit Subject Teachers</a>
+            <a class="collapse-item" href="{{route('role.users.show','teacher')}}"> View </a>
+            <a class="collapse-item" href="{{route('assign.class.user.edit')}}"><i class="fas fa-sync-alt"></i> Update Class </a>
+            <a class="collapse-item" href="{{route('assign.subject.user.edit')}}"><i class="fas fa-user-edit"></i> Edit Subject  </a>
         </div>
     </div>
 </li>
