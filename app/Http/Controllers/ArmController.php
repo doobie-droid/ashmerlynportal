@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arm;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -33,10 +36,18 @@ class ArmController extends Controller
     public function update(){}
 
     public function assignclassedit(){
-        return view('admin.arms.assign-teacher');
+        $years = Year::all();
+//        $teachers =  Role::where('slug','teacher')
+//            ->with('users',function ($query){
+//                $query->where('status',1);
+//            })->get()->first()->users;
+//        return $teachers;
+
+        return view('admin.arms.assign-teacher',compact(['years']));
     }
 
     public function assignclassstore(){
+        return request();
         return view('admin.arms.assign-teacher');
     }
 

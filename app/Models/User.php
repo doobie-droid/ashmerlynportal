@@ -78,4 +78,15 @@ class User extends Authenticatable
 
 
     }
+    public function getTeacherName($var){
+        if($var == null){
+            return 'No teacher yet';
+        }
+        $user = User::find($var);
+        return $user->surname.' '.$user->firstname;
+    }
+
+    public function availableTeachers(){
+        return 2;
+    }
 }
