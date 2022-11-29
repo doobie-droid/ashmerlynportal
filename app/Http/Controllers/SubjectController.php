@@ -30,4 +30,12 @@ class SubjectController extends Controller
         Session::flash('success_message', 'A new subject has just been successfully added');
         return back();
     }
+
+    public function assignsubjectedit(){
+        return view('admin.subjects.assign-teacher');
+    }
+
+    public function assignsubjectstore(){
+        return view('admin.subjects.assign-teacher');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arm;
 use App\Models\Subject;
 use App\Models\Year;
 use Illuminate\Http\Request;
@@ -11,12 +12,14 @@ use NumberFormatter;
 class YearController extends Controller
 {
     //
-    public function index(){
-        return view('admin.years.index');
-    }
+
     public function armindex($year_id){
+        if($year_id == 'empty'){
+            $year_id = Year::orderBy('created_at', 'asc')->first()->id;
+        }
         $years = Year::orderBy('name','asc')->get();
-        return view ('admin.years.armindex', compact(['years','year_id']));
+        $arms = Arm::orderBy('id','asc')->get();
+        return view ('admin.years.armindex', compact(['years','year_id','arms']));
     }
 
 
@@ -60,6 +63,26 @@ class YearController extends Controller
         $year->subjects()->detach($subject);
         Session::flash('error_message', $subject->name.' has been removed from  Year '.$year->slug);
         return back();
+    }
+
+    public function armattach(){
+        $arm = Arm::find(request()->arm_id);
+        $year = Year::find(request()->class_id);
+        $year->arms()->attach($arm);
+        Session::flash('success_message', $arm->name.' has been added to Year '.$year->slug);
+        return back();
+    }
+
+    public function armdetach(){
+        $arm = Arm::find(request()->arm_id);
+        $year = Year::find(request()->class_id);
+        $year->arms()->detach($arm);
+        Session::flash('error_message', $arm->name.' has been removed from  Year '.$year->slug);
+        return back();
+    }
+
+    public function showclassprofile(){
+        return view('admin.years.classprofile');
     }
 
 

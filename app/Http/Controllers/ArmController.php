@@ -32,4 +32,12 @@ class ArmController extends Controller
 
     public function update(){}
 
+    public function assignclassedit(){
+        return view('admin.arms.assign-teacher');
+    }
+
+    public function assignclassstore(){
+        return view('admin.arms.assign-teacher');
+    }
+
 }

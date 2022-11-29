@@ -6,7 +6,7 @@
         @if($users && count($users))
             <div class="card  mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{\Illuminate\Support\Str::upper($show_slug).'S'}}</h6>
                 </div>
 
                 <div class="card-body">

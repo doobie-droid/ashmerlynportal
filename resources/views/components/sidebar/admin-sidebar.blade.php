@@ -35,8 +35,8 @@
     <div id="collapseClasses" class="collapse" aria-labelledby="headingClasses" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Classes:</h6>
-            <a class="collapse-item" href="{{route('class.index')}}"> View Classes</a>
-            <a class="collapse-item" href="{{route('class.create')}}"> Create/Modify Classes</a>
+            <a class="collapse-item" href="{{route('class.index.arm','empty')}}"> View Classes</a>
+            <a class="collapse-item" href="{{route('class.create')}}"> Add/Remove Subject </a>
         </div>
     </div>
 </li>
@@ -48,7 +48,9 @@
     <div id="collapseTeachers" class="collapse" aria-labelledby="headingTeachers" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Teachers</h6>
-            <a class="collapse-item" href="login.html"> View Teachers</a>
+            <a class="collapse-item" href="{{route('role.users.show','teacher')}}"> View Teachers</a>
+            <a class="collapse-item" href="{{route('assign.class.user.edit')}}"> Edit FormTeachers</a>
+            <a class="collapse-item" href="{{route('assign.subject.user.edit')}}"> Edit Subject Teachers</a>
         </div>
     </div>
 </li>
