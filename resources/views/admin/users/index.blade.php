@@ -109,7 +109,7 @@
                 </div>
             </div>
         </div>
-        <div class=" mb-4 overflow-scroll">
+        <div class=" mb-4 mobile-overflow">
             <div class=" py-3">   {{$users->onEachSide(2)->links()}}</div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

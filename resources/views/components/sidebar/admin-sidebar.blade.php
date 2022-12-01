@@ -49,8 +49,8 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Teachers</h6>
             <a class="collapse-item" href="{{route('role.users.show','teacher')}}"> View </a>
-            <a class="collapse-item" href="{{route('assign.class.user.edit')}}"><i class="fas fa-sync-alt"></i> Update Class </a>
-            <a class="collapse-item" href="{{route('assign.subject.user.edit')}}"><i class="fas fa-user-edit"></i> Edit Subject  </a>
+            <a class="collapse-item" href="{{route('assign.class.user.edit')}}"> Change Class Teacher</a>
+            <a class="collapse-item" href="{{route('assign.subject.user.edit')}}"> Change Subject Teacher </a>
         </div>
     </div>
 </li>
