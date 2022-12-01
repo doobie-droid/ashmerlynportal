@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Year;
@@ -62,11 +63,12 @@ class TeacherController extends Controller
         //
         $this->authorize("view",$user);
         $classes = Year::all();
+        $teacher_role = Role::where('slug','teacher')->get()->first();
+        $student_role = Role::where('slug','student')->get()->first();
 
 
 
-
-        return view('staff.scores.edit',compact(['classes']));
+        return view('staff.scores.edit',compact(['classes','student_role','teacher_role']));
     }
 
     /**
@@ -76,9 +78,10 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        return request();
     }
 
     /**

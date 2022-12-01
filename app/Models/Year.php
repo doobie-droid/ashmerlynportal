@@ -30,7 +30,7 @@ class Year extends Model
             ->wherePivot('user_id', auth()->user()->id);
     }
 
-    public function students(){
+    public function users(){
         return $this->hasMany(User::class)->where('status',1);
     }
 

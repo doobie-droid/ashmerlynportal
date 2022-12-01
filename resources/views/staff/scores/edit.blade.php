@@ -51,6 +51,7 @@
     @endsection
     @section("content")
         <section id="tabs" class="project-tab">
+            <span id="token" class="ghost">{{csrf_token()}}</span>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -61,43 +62,82 @@
                                     @foreach($classes as $class)
                                         @if(count($class->subjectTeacher)>0)
                                             @foreach($class->subjectTeacher as $subject)
-                                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                                           href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{{'Year '.auth()->user()->getYearName($subject->pivot->year_id).' '.$subject->name}}</a>
+
+                                                <a class="nav-item nav-link @if($loop->first && $loop->parent->first) active @endif"
+                                                   id="{{'nav-home-tab_'.$class->id.'_'.$subject->id}}"
+                                                   data-toggle="tab"
+                                                   href="{{'#nav-home_'.$class->id.'_'.$subject->id}}" role="tab"
+                                                   aria-controls="{{'nav-home_'.$class->id.'_'.$subject->id}}"
+                                                   aria-selected="true">{{'Year '.auth()->user()->getYearName($subject->pivot->year_id).' '.$subject->name}}</a>
+
                                             @endforeach
                                         @endif
                                     @endforeach
                                 </div>
                             </nav>
                             <div class="tab-content mobile-overflow" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                     aria-labelledby="nav-home-tab">
-                                    <table class="table" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Project Name</th>
-                                            <th>Employer</th>
-                                            <th>Awards</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><a href="#">Work 1</a></td>
-                                            <td>Doe</td>
-                                            <td>john@example.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">Work 2</a></td>
-                                            <td>Moe</td>
-                                            <td>mary@example.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">Work 3</a></td>
-                                            <td>Dooley</td>
-                                            <td>july@example.com</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @foreach($classes as $class)
+                                    @if(count($class->subjectTeacher)>0)
+                                        @foreach($class->subjectTeacher as $subject)
+
+                                            <div
+                                                class="tab-pane fade @if($loop->first && $loop->parent->first) show active @endif"
+                                                id="{{'nav-home_'.$class->id.'_'.$subject->id}}" role="tabpanel"
+                                                aria-labelledby="{{'nav-home-tab_'.$class->id.'_'.$subject->id}}">
+                                                <table class="table" cellspacing="0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Class</th>
+                                                        <th>Assignment</th>
+                                                        <th>Classwork</th>
+                                                        <th>Test</th>
+                                                        <th>Submit</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($class->users as $user)
+                                                        @if($user->roles->contains($student_role) )
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#">{{$user->surname.' '.$user->firstname}}</a>
+                                                                </td>
+                                                                <td>{{'Year '.auth()->user()->getYearName($user->year_id)}}</td>
+                                                                <td>
+                                                                    <form>
+                                                                        <input id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}}" class="form-control" type="text"
+                                                                               name="score_1">
+                                                                    </form>
+                                                                </td>
+                                                                <td>
+                                                                    <form>
+                                                                        <input id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}}" class="form-control"
+                                                                               type="text" name="score_2">
+                                                                    </form>
+                                                                </td>
+                                                                <td>
+                                                                    <form>
+                                                                        <input id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}}"  class="form-control"
+                                                                               type="text" name="score_3">
+                                                                    </form>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="submit" onclick='submitFunction({{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}},{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}},{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}})'
+                                                                            class="btn btn-outline-primary btn-circle">
+                                                                        <i class="fas fa-check"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+
+
+                                            </div>
+
+                                        @endforeach
+                                    @endif
+                                @endforeach
 
                             </div>
 
@@ -108,6 +148,7 @@
         </section>
     @endsection
     @section('scripts')
+            <script src="{{asset('js/enterscore.js')}}"></script>
 
     @endsection
 </x-portal-layout>

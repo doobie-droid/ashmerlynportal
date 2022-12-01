@@ -145,7 +145,7 @@ class User extends Authenticatable
             //the part that has class with arms is going to  be class with subjects if the
             //variable(variable) that is being inputed changes from arms to subject
             foreach ($years as $class) {
-                foreach ($class->$arms_or_subjects as $class_with_arm) {
+                foreach ($class->arms as $class_with_arm) {
                     if ($class_with_arm->pivot->user_id) {
                         $unavailable_teachers[] = $class_with_arm->pivot->user_id;
                     }
@@ -163,6 +163,10 @@ class User extends Authenticatable
             }
         }
         return $available_teachers;
+    }
+
+    public function year(){
+        return $this->belongsTo(Year::class);
     }
 
 
