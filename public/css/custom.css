@@ -6,8 +6,23 @@
     .mobile-overflow {
         overflow: scroll;
     }
+    div.dataTables_paginate.paging_simple_numbers{
+        width: 250%;
+        overflow-x:visible ;
+    }
 }
 
+@media  screen and (max-width: 830px) and (min-width: 600px)  {
+    div.dataTables_paginate.paging_simple_numbers{
+        width: 220%;
+        overflow-x:visible;
+    }
+    div#dataTable_wrapper div.row div.col-sm-12.col-md-5 {
+        display: block ;
+        max-width: 45%;
+    }
+
+}
 .show-element{
     z-index: 2000;
 }
@@ -35,6 +50,7 @@
 .table-hover tbody tr:hover {
     color: #000000;
 }
+
 
 
 

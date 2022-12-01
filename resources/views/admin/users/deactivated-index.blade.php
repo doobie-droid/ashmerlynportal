@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class=" mb-4 overflow-scroll">
+        <div class=" mb-4 mobile-overflow">
             <div class=" py-3">   {{$users->onEachSide(2)->links()}}</div>
         </div>
     @endsection

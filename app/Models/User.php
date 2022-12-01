@@ -52,6 +52,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    function substrwords($text, $maxchar, $end='...')
+    {
+        if (strlen($text) > $maxchar || $text == '') {
+            $words = preg_split('/\s/', $text);
+            $output = '';
+            $i = 0;
+            while (1) {
+                $length = strlen($output) + strlen($words[$i]);
+                if ($length > $maxchar) {
+                    break;
+                } else {
+                    $output .= " " . $words[$i];
+                    ++$i;
+                }
+            }
+            $output .= $end;
+        } else {
+            $output = $text;
+        }
+        return $output;
+    }
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -84,15 +105,31 @@ class User extends Authenticatable
 
     }
 
-    public function getName($var)
+    public function getName($id)
     {
-        if ($var == null) {
+        if ($id == null) {
             return 'null';
         }
-        $user = User::find($var);
+        $user = User::find($id);
         return $user->surname . ' ' . $user->firstname;
     }
 
+    public function getSubjectName($id){
+        if ($id == null) {
+            return 'null';
+        }
+        $subject = Subject::find($id);
+
+       return $this->substrwords($subject->name,12);
+    }
+
+    public function getYearName($id){
+        if($id == null){
+            return 'null';
+        }
+        $year = Year::find($id);
+        return Str::ucfirst($year->slug);
+    }
     public function availableTeachers($arms_or_subjects)
     {
         //
@@ -104,7 +141,7 @@ class User extends Authenticatable
             })->get()->first()->users;
         //then get all the teachers who are unavailable
         $unavailable_teachers = [];
-        if (!$arms_or_subjects == 'all') {
+        if ($arms_or_subjects !== 'all') {
             //the part that has class with arms is going to  be class with subjects if the
             //variable(variable) that is being inputed changes from arms to subject
             foreach ($years as $class) {
@@ -127,4 +164,7 @@ class User extends Authenticatable
         }
         return $available_teachers;
     }
+
+
+
 }
