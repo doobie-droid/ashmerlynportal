@@ -65,10 +65,25 @@ class TeacherController extends Controller
         $classes = Year::all();
         $teacher_role = Role::where('slug','teacher')->get()->first();
         $student_role = Role::where('slug','student')->get()->first();
-
-
-
-        return view('staff.scores.edit',compact(['classes','student_role','teacher_role']));
+        $is_exam = 1;
+        $entry_year = 2022;
+        $term = 1;
+        if($is_exam == 1){
+            $maximum1_2 = 20;
+            $maximum3 = 60;
+            $score_1_title = 'C.A. 1';
+            $score_2_title = 'C.A. 2';
+            $score_3_title = 'Examination';
+        }else{
+            $maximum1_2 = 5;
+            $maximum3 = 10;
+            $score_1_title = 'Assignment';
+            $score_2_title = 'Classwork';
+            $score_3_title = 'Test';
+        }
+        return view('staff.scores.edit',compact(['classes','student_role'
+            ,'teacher_role','is_exam','entry_year','term','maximum1_2','maximum3',
+            'score_1_title','score_2_title','score_3_title']));
     }
 
     /**
