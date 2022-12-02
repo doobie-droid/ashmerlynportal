@@ -27,23 +27,33 @@
                             <th scope="row">{{$counter}}</th>
                             <th scope="row">{{'Year '.$class->slug}}</th>
                             <th scope="row">{{$class_with_arm->name}}</th>
-                            <th scope="row " class="@if($class_with_arm->pivot->user_id == null) empty-data @endif">{{auth()->user()->getName($class_with_arm->pivot->user_id)}}</th>
+                            @if($class_with_arm->pivot->user_id == null)
+                                <th scope="row "
+                                    class=" empty-data ">{{auth()->user()->getName($class_with_arm->pivot->user_id)}}</th>
+                            @else
+                                <th scope="row "
+                                    class=" empty-data "><a href="{{route('user.profile.edit',$class_with_arm->pivot->user_id)}}">{{auth()->user()->getName($class_with_arm->pivot->user_id)}}</a></th>
+                            @endif
                             <td>
-                                <form id="{{'form'.$class->id.$class_with_arm->id}}" method="post" action="{{route('assign.class.user.store','red')}}">
+                                <form id="{{'form'.$class->id.$class_with_arm->id}}" method="post"
+                                      action="{{route('assign.class.user.store','red')}}">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="year_id" value="{{$class->id}}">
                                     <input type="hidden" name="arm_id" value="{{$class_with_arm->id}}">
-                                    <select class="form-control " name="teacher_id" id="cars" >
+                                    <select class="form-control " name="teacher_id" id="cars">
                                         @foreach($available_teachers as $available_teacher)
-                                            <option value="{{$available_teacher->id}}">{{$available_teacher->surname.' '.$available_teacher->firstname}}</option>
+                                            <option
+                                                value="{{$available_teacher->id}}">{{$available_teacher->surname.' '.$available_teacher->firstname}}</option>
 
                                         @endforeach
                                     </select>
                                 </form>
                             </td>
                             <td>
-                                <button class="btn  btn-circle btn-outline-success" type="submit" onclick='submitFunction({{'form'.$class->id.$class_with_arm->id}})'><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn  btn-circle btn-outline-primary" type="submit"
+                                        onclick='submitFunction({{'form'.$class->id.$class_with_arm->id}})'><i
+                                        class="fas fa-sync-alt"></i></button>
                             </td>
 
                         </tr>

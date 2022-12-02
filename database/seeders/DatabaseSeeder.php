@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //Populating a many-to-many relationship on the database
-        User::factory()->count(3000)->create();
+        User::factory()->count(50)->create();
 
         $roles = Role::where('id','<>',1)->get();
 

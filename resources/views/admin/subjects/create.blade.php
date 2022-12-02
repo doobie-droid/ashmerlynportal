@@ -11,7 +11,7 @@
         @enderror
         <br>
         <p>
-            <a class="btn btn-outline-success btn-block btn-circle float-right" data-toggle="collapse"
+            <a class="btn btn-outline-primary btn-block btn-circle float-right" data-toggle="collapse"
                href="#collapseAddDetails" role="button" aria-expanded="false" aria-controls="collapseAddDetails">
                 <i class="fas fa-plus"></i>
             </a>
@@ -35,15 +35,17 @@
                             <div class="form-group">
                                 <label for="name">Arm Name</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror "
-                                       name="name" id="arm_name">
+                                       name="name" id="arm_name" placeholder="Enter the name of the arm you wanna add...">
                                 @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <br>
-                                <label for="password">Confirm User Password</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror "
-                                       name="password" id="password_arm">
-                                @error('password')
+                                <label for="name">Admin Token</label>
+                                <input type="text"
+                                       class="form-control @error('administratortoken') is-invalid @enderror "
+                                       name="administratortoken"
+                                       id="token2">
+                                @error('administratortoken')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -71,10 +73,12 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <br>
-                                <label for="password">Confirm User Password</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror "
-                                       name="password" id="password_subject">
-                                @error('password')
+                                <label for="name">Admin Token</label>
+                                <input type="text"
+                                       class="form-control @error('administratortoken') is-invalid @enderror "
+                                       name="administratortoken"
+                                       id="token2">
+                                @error('administratortoken')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -8,7 +8,7 @@
         <div class="table-responsive">
             <table class="table ">
                 <thead>
-                <tr >
+                <tr>
                     <th scope="col">#</th>
                     <th scope="col">Class</th>
                     <th scope="col">Subject</th>
@@ -27,8 +27,13 @@
                             <th scope="row">{{$counter}}</th>
                             <th scope="row">{{'Year '.$class->slug}}</th>
                             <th scope="row">{{$class_with_subject->name}}</th>
-                            <th scope="row "
-                                class="@if($class_with_subject->pivot->user_id == null) empty-data @endif">{{auth()->user()->getName($class_with_subject->pivot->user_id)}}</th>
+                            @if($class_with_subject->pivot->user_id == null)
+                                <th scope="row "
+                                    class="empty-data">{{auth()->user()->getName($class_with_subject->pivot->user_id)}}</th>
+                            @else
+                                <th scope="row "
+                                    class="empty-data"><a href="{{route('user.profile.edit',$class_with_subject->pivot->user_id)}}">{{auth()->user()->getName($class_with_subject->pivot->user_id)}}</a></th>
+                            @endif
                             <td>
                                 <form id="{{'form'.$class->id.$class_with_subject->id}}" method="post"
                                       action="{{route('assign.subject.user.store','red')}}">
@@ -46,8 +51,9 @@
                                 </form>
                             </td>
                             <td>
-                                <button class="btn  btn-circle btn-outline-dark" type="submit"
-                                        onclick='submitFunction({{'form'.$class->id.$class_with_subject->id}})'> <i class="fas fa-user-edit"></i> </button>
+                                <button class="btn  btn-circle btn-outline-primary" type="submit"
+                                        onclick='submitFunction({{'form'.$class->id.$class_with_subject->id}})'><i
+                                        class="fas fa-user-edit"></i></button>
                             </td>
 
                         </tr>

@@ -95,7 +95,7 @@ class RegisterController extends Controller
             }
 
             $user->roles()->attach(Role::find(1));
-            $user->roles()->attach(Role::find(2));
+            $user->roles()->attach(Role::find(3));
             Detail::create([
                 'exam'=>'1',
                 'term'=>'1',

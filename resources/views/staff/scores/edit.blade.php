@@ -54,6 +54,8 @@
             <div class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('error-message')}}</div>
         @elseif(\Illuminate\Support\Facades\Session::has('success-message'))
             <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success-message')}}</div>
+        @elseif(\Illuminate\Support\Facades\Session::has('info-message'))
+            <div class="alert alert-info">{{\Illuminate\Support\Facades\Session::get('info-message')}}</div>
         @endif
         <section id="tabs" class="project-tab">
             <span id="token" class="ghost">{{csrf_token()}}</span>
@@ -121,14 +123,15 @@
                                                         @if($user->roles->contains($student_role) )
                                                             <tr>
                                                                 <td>
-                                                                    <a href="#">{{$user->surname.' '.$user->firstname}}</a>
+                                                                    {{$user->surname.' '.$user->firstname}}
                                                                 </td>
                                                                 <td>{{'Year '.auth()->user()->getYearName($user->year_id)}}</td>
                                                                 <td>
                                                                     <form>
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}}"
-                                                                            class="form-control" required type="number"
+                                                                            class="form-control" type="number"
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_1}}@endif
                                                                             min="0" max="{{$detail->small_value}}"
                                                                             step="any"
                                                                             name="score_1">
@@ -145,6 +148,7 @@
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}}"
                                                                             class="form-control"
                                                                             type="number" min="0"
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_2}}@endif
                                                                             max="{{$detail->small_value}}"
                                                                             step="any" name="score_2">
                                                                     </form>
@@ -155,6 +159,7 @@
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}}"
                                                                             class="form-control"
                                                                             type="number" min="0"
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_3}}@endif
                                                                             max="{{$detail->large_value}}"
                                                                             step="any" name="score_3">
                                                                         <input
