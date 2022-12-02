@@ -30,7 +30,7 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
-        return $user->id == $model->id;
+        return $user->id == $model->id && $user->status == 1;
     }
 
     public function adminAuth(User $user)
@@ -72,7 +72,7 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         //
-        return $user->id == $model->id;
+        return $user->id == $model->id && $user->status == 1;
     }
 
     /**

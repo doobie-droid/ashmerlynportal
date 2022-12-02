@@ -34,8 +34,10 @@ class SubjectController extends Controller
 
     public function assignsubjectedit(){
         $years = Year::all();
-        $available_teachers = auth()->user()->availableTeachers('all');
-
+        $available_teachers=  Role::where('slug', 'teacher')
+            ->with('users', function ($query) {
+                $query->where('status', 1)->select('id','firstname','surname');
+            })->get()->first()->users;
         return view('admin.subjects.assign-teacher',compact(['years','available_teachers']));
     }
 
@@ -46,7 +48,7 @@ class SubjectController extends Controller
         $year->subjects()->updateExistingPivot(request()->subject_id, [
             'user_id' => request()->teacher_id,
         ]);
-        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now teaching  Year '.$year->name.' '.$subject->slug);
+        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now teaching  Year '.$year->name.' '.$subject->name);
         return back();
     }
 }
