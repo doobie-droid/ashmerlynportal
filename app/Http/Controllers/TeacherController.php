@@ -90,7 +90,7 @@ class TeacherController extends Controller
 
         if (request()->score_1 < $detail->small_value && request()->score_1 > 0 &&
             request()->score_2 < $detail->small_value && request()->score_2 > 0 &&
-            request()->score_2 < $detail->large_value && request()->score_2 > 0) {
+            request()->score_3 < $detail->large_value && request()->score_3 > 0) {
 
             $validation_passed = true;
         } else {
