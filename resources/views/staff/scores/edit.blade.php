@@ -50,12 +50,13 @@
         </style>
     @endsection
     @section("content")
+        @if(\Illuminate\Support\Facades\Session::has('error-message'))
+            <div class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('error-message')}}</div>
+        @elseif(\Illuminate\Support\Facades\Session::has('success-message'))
+            <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success-message')}}</div>
+        @endif
         <section id="tabs" class="project-tab">
             <span id="token" class="ghost">{{csrf_token()}}</span>
-            <span id="teacher_id" class="ghost">{{auth()->user()->id}}</span>
-            <span id="is_exam" class="ghost">{{$is_exam}}</span>
-            <span id="entry_year" class="ghost">{{$entry_year}}</span>
-            <span id="term" class="ghost">{{$term}}</span>
 
             <div class="container">
                 <div class="row">
@@ -94,9 +95,24 @@
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Class</th>
-                                                        <th>{{$score_1_title}}</th>
-                                                        <th>{{$score_2_title}}</th>
-                                                        <th>{{$score_3_title}}</th>
+                                                        <th>@if(+$detail->exam == 1 )
+                                                                C.A. 1
+                                                            @else
+                                                                Assignment
+                                                            @endif</th>
+                                                        <th>@if(+$detail->exam == 1 )
+                                                                C.A. 2
+                                                            @else
+                                                                Classwork
+                                                            @endif</th>
+                                                        </th>
+                                                        <th>@if(+$detail->exam == 1 )
+                                                                Exam
+                                                            @else
+                                                                Test
+
+                                                            @endif</th>
+                                                        </th>
                                                         <th>Submit</th>
                                                     </tr>
                                                     </thead>
@@ -112,16 +128,25 @@
                                                                     <form>
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}}"
-                                                                            class="form-control"  type="number" min="0" max="{{$maximum1_2}}" step="any"
+                                                                            class="form-control" required type="number"
+                                                                            min="0" max="{{$detail->small_value}}"
+                                                                            step="any"
                                                                             name="score_1">
+                                                                        @error('score_1')
+                                                                        <div
+                                                                            class="invalid-feedback">{{ $message }}</div>
+                                                                        @enderror
                                                                     </form>
+
                                                                 </td>
                                                                 <td>
                                                                     <form>
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}}"
                                                                             class="form-control"
-                                                                            type="number" min="0" max="{{$maximum1_2}}" step="any" name="score_2">
+                                                                            type="number" min="0"
+                                                                            max="{{$detail->small_value}}"
+                                                                            step="any" name="score_2">
                                                                     </form>
                                                                 </td>
                                                                 <td>
@@ -129,7 +154,9 @@
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}}"
                                                                             class="form-control"
-                                                                            type="number" min="0" max="{{$maximum3}}" step="any" name="score_3">
+                                                                            type="number" min="0"
+                                                                            max="{{$detail->large_value}}"
+                                                                            step="any" name="score_3">
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_year_id'}}"
                                                                             class="form-control"
@@ -142,7 +169,8 @@
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_subject_id'}}"
                                                                             class="form-control"
-                                                                            hidden value="{{$subject->id}}" name="subject_id">
+                                                                            hidden value="{{$subject->id}}"
+                                                                            name="subject_id">
                                                                     </form>
                                                                 </td>
                                                                 <td>

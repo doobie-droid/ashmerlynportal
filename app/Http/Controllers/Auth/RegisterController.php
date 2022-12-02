@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Detail;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -92,7 +93,19 @@ class RegisterController extends Controller
             foreach($data as $datum){
                 Role::create($datum);
             }
+
             $user->roles()->attach(Role::find(1));
+            $user->roles()->attach(Role::find(2));
+            Detail::create([
+                'exam'=>'1',
+                'term'=>'1',
+                'small_value'=>20,
+                'large_value'=>60,
+                'entry_year'=>now()->year,
+                'show_result'=>'1',
+                'show_all_result'=>'1'
+
+            ]);
         };
         return $user;
     }

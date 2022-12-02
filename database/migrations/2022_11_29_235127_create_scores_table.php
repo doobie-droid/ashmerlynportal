@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');
-            $table->integer('year_id')->references('id')->on('years')->constrained();
+            $table->string('year_id')->references('id')->on('years')->constrained();
             $table->string('subject_id')->references('id')->on('subjects')->constrained();
             $table->boolean('exam');
             $table->float('score_1');
             $table->float('score_2');
             $table->float('score_3');
-            $table->year('entry_date')->default(now()->year);
+            $table->year('entry_year')->default(now()->year);
             $table->integer('term');
-            $table->string('remark');
+            $table->string('teacher_id')->references('id')->on('users')->constrained();
             $table->timestamps();
         });
     }

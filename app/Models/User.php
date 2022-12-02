@@ -80,7 +80,20 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
-        return asset('storage/' . $value);
+        if ($value == null){
+            return 'https://eu.ui-avatars.com/api/?name='.$this->surname.'+'.$this->firstname.'&size=300';
+        }else {
+            return asset('storage/' . $value);
+        }
+
+    }
+    public function getDateOfBirthAttribute($value)
+    {
+        if ($value == null){
+            return 'Not filled yet';
+        }else {
+            return $value;
+        }
 
     }
 

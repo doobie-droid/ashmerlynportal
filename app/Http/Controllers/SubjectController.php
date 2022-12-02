@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arm;
+use App\Models\Role;
 use App\Models\Subject;
 use App\Models\Year;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class SubjectController extends Controller
     public function assignsubjectedit(){
         $years = Year::all();
         $available_teachers = auth()->user()->availableTeachers('all');
+
         return view('admin.subjects.assign-teacher',compact(['years','available_teachers']));
     }
 
@@ -44,7 +46,7 @@ class SubjectController extends Controller
         $year->subjects()->updateExistingPivot(request()->subject_id, [
             'user_id' => request()->teacher_id,
         ]);
-        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now teaching  Year '.$year->slug.' '.$subject->slug);
+        Session::flash('message',auth()->user()->getName(request()->teacher_id).' is now teaching  Year '.$year->name.' '.$subject->slug);
         return back();
     }
 }

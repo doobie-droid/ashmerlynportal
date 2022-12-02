@@ -4,13 +4,11 @@ const element2 = document.createElement("input");
 const element3 = document.createElement("input");
 const element4 = document.createElement("input");
 const element5 = document.createElement("input");
-const element6  = document.createElement('input');
+const element6 = document.createElement('input');
 const element7 = document.createElement('input');
 const element8 = document.createElement('input');
-const element9 = document.createElement('input');
-const element10 = document.createElement('input');
-const element11 = document.createElement('input');
-const element12 = document.createElement('input');
+
+
 function submitFunction(input1, input2, input3,year_id, user_id,subject_id) {
 
     form.method = "POST";
@@ -36,8 +34,8 @@ function submitFunction(input1, input2, input3,year_id, user_id,subject_id) {
     element5.name = "score_3";
     form.appendChild(element5);
 
-    element6.value = document.getElementById('teacher_id').textContent;
-    element6.name = "teacher_id";
+    element6.value = subject_id.value;
+    element6.name = "subject_id";
     form.appendChild(element6);
 
     element7.value = year_id.value;
@@ -48,25 +46,14 @@ function submitFunction(input1, input2, input3,year_id, user_id,subject_id) {
     element8.name = "user_id";
     form.appendChild(element8);
 
-    element9.value = subject_id.value;
-    element9.name = "subject_id";
-    form.appendChild(element9);
-
-    element10.value = document.getElementById('is_exam').textContent;
-    element10.name = "exam";
-    form.appendChild(element10);
-
-    element11.value = document.getElementById('entry_year').textContent;
-    element11.name = "entry_year";
-    form.appendChild(element11);
-
-    element12.value = document.getElementById('term').textContent;
-    element12.name = "term";
-    form.appendChild(element12);
 
     document.body.appendChild(form);
+    console.log(input1)
 
-    form.submit();
+
+
+    form.submit()
+
 
 }
 

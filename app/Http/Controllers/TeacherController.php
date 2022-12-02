@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
+use App\Models\Detail;
 use App\Models\Role;
+use App\Models\Score;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TeacherController extends Controller
 {
@@ -33,7 +37,7 @@ class TeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,7 +48,7 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,54 +59,65 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
         //
-        $this->authorize("view",$user);
+        $this->authorize("view", $user);
         $classes = Year::all();
-        $teacher_role = Role::where('slug','teacher')->get()->first();
-        $student_role = Role::where('slug','student')->get()->first();
-        $is_exam = 1;
-        $entry_year = 2022;
-        $term = 1;
-        if($is_exam == 1){
-            $maximum1_2 = 20;
-            $maximum3 = 60;
-            $score_1_title = 'C.A. 1';
-            $score_2_title = 'C.A. 2';
-            $score_3_title = 'Examination';
-        }else{
-            $maximum1_2 = 5;
-            $maximum3 = 10;
-            $score_1_title = 'Assignment';
-            $score_2_title = 'Classwork';
-            $score_3_title = 'Test';
-        }
-        return view('staff.scores.edit',compact(['classes','student_role'
-            ,'teacher_role','is_exam','entry_year','term','maximum1_2','maximum3',
-            'score_1_title','score_2_title','score_3_title']));
+        $detail = Detail::find(1);
+        $teacher_role = Role::where('slug', 'teacher')->get()->first();
+        $student_role = Role::where('slug', 'student')->get()->first();
+        return view('staff.scores.edit', compact(['classes', 'student_role', 'teacher_role','detail']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
+        $detail= Detail::find(1);
         //
-        return request();
+
+        if (request()->score_1 < $detail->small_value && request()->score_1 > 0 &&
+            request()->score_2 < $detail->small_value && request()->score_2 > 0 &&
+            request()->score_2 < $detail->large_value && request()->score_2 > 0) {
+            $validation_passed = true ;
+        } else {
+            Session::flash('error-message', 'Fill all the fields for '.auth()->user()->getName(request()->user_id).' properly. Invalid Input!');
+            $validation_passed = false;
+
+        }
+
+        if($validation_passed){
+            Score::create([
+                'user_id'=>request()->user_id,
+                'year_id'=>request()->year_id,
+                'subject_id'=>request()->subject_id,
+                'exam'=>$detail->exam,
+                'score_1'=>request()->score_1,
+                'score_2'=>request()->score_2,
+                'score_3'=>request()->score_3,
+                'entry_year'=>$detail->entry_year,
+                'term'=>$detail->term,
+                'teacher_id'=>auth()->user()->id
+
+            ]);
+            Session::flash('success-message', 'You entered input for '.auth()->user()->getName(request()->user_id).' has been recorded');
+        }
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
