@@ -21,4 +21,8 @@ class Score extends Model
         'term',
         'teacher_id'
     ];
+
+    public function chooseSubject($subject_id){
+        return 2;
+    }
 }

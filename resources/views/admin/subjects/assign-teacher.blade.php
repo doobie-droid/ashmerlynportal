@@ -28,7 +28,7 @@
                             <th scope="row">{{'Year '.$class->slug}}</th>
                             <th scope="row">{{$class_with_subject->name}}</th>
                             <th scope="row "
-                                class="@if(auth()->user()->getName($class_with_subject->pivot->user_id) == 'null') empty-data @endif">{{auth()->user()->getName($class_with_subject->pivot->user_id)}}</th>
+                                class="@if($class_with_subject->pivot->user_id == null) empty-data @endif">{{auth()->user()->getName($class_with_subject->pivot->user_id)}}</th>
                             <td>
                                 <form id="{{'form'.$class->id.$class_with_subject->id}}" method="post"
                                       action="{{route('assign.subject.user.store','red')}}">
@@ -39,7 +39,7 @@
                                     <select class="form-control " name="teacher_id" id="cars">
                                         @foreach($available_teachers as $available_teacher)
                                             <option
-                                                value="{{$available_teacher}}">{{auth()->user()->getName($available_teacher)}}</option>
+                                                value="{{$available_teacher->id}}">{{$available_teacher->surname.' '.$available_teacher->firstname}}</option>
 
                                         @endforeach
                                     </select>

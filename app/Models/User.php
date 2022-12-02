@@ -182,6 +182,8 @@ class User extends Authenticatable
         return $this->belongsTo(Year::class);
     }
 
-
+    public function subjectScore($variable){
+        return $this->hasMany(Score::class)->where('subject_id','2');
+    }
 
 }

@@ -65,6 +65,7 @@ class TeacherController extends Controller
     public function edit(User $user)
     {
         //
+//         return User::find(8)->subjectScore(2)->get();
         $this->authorize("view", $user);
         $classes = Year::all();
         $detail = Detail::find(1);
@@ -82,6 +83,8 @@ class TeacherController extends Controller
      */
     public function update(Request $request)
     {
+
+        $this->authorize("teacherAuth", User::class);
         $detail= Detail::find(1);
         //
 
