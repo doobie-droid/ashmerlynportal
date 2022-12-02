@@ -143,40 +143,6 @@ class User extends Authenticatable
         $year = Year::find($id);
         return Str::ucfirst($year->slug);
     }
-    public function availableTeachers($arms_or_subjects)
-    {
-        //
-        $years = Year::all();
-        //first get all the teachers
-        $teachers = Role::where('slug', 'teacher')
-            ->with('users', function ($query) {
-                $query->where('status', 1)->select('id');
-            })->get()->first()->users;
-        //then get all the teachers who are unavailable
-        $unavailable_teachers = [];
-        if ($arms_or_subjects !== 'all') {
-            //the part that has class with arms is going to  be class with subjects if the
-            //variable(variable) that is being inputed changes from arms to subject
-            foreach ($years as $class) {
-                foreach ($class->arms as $class_with_arm) {
-                    if ($class_with_arm->pivot->user_id) {
-                        $unavailable_teachers[] = $class_with_arm->pivot->user_id;
-                    }
-                }
-            }
-        }
-        //then get the teachers who are available
-        $available_teachers = [];
-        foreach ($teachers as $teacher) {
-
-            if (in_array($teacher->id, $unavailable_teachers)) {
-
-            } else {
-                $available_teachers[] = $teacher->id;
-            }
-        }
-        return $available_teachers;
-    }
 
     public function year(){
         return $this->belongsTo(Year::class);
