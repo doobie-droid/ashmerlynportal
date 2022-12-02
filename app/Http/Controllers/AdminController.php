@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
@@ -114,6 +116,34 @@ class AdminController extends Controller
         //
     }
 
+    public function roleattach(User $user){
+        $validation_passed = true;
+        if($user->roles->contains(Role::where('slug','student')->get()->first())){
+            Session::flash('error_message', 'Error! Students such as '.$user->surname.' '.$user->firstname.' can only have one role');
+            $validation_passed= false;
+        }
+        if($user->roles->isNotEmpty() && Role::find(request()->role_id)->slug == 'student' ){
+            Session::flash('error_message', 'Error! Users like '.$user->surname.' '.$user->firstname.' who have other roles cannot be assigned as students');
+            $validation_passed= false;
+        }
+        if(count(DB::table('role_user')->where('role_id',1)->get()) >= 2 && Role::find(request()->role_id)->slug == 'administrator'  ){
+            Session::flash('error_message', 'Sorry! There can be only two admins at a moment, deactivate the other admin or remove his admin status');
+            $validation_passed= false;
+        }
+        if ($validation_passed){
+            $role = Role::find(request()->role_id);
+            $user->roles()->attach($role);
+            Session::flash('role_attach', $role->name.' has been added to '.$user->surname.' '.$user->firstname);
+        }
+        return back();
+    }
+
+    public function roledetach(User $user){
+        $role = Role::find(request()->role_id);
+        $user->roles()->detach($role);
+        Session::flash('role_detach', $role->name.' has been removed from '.$user->surname.' '.$user->firstname);
+        return back();
+    }
     /**
      * Remove the specified resource from storage.
      *

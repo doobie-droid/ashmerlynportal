@@ -28,3 +28,7 @@ Route::get('/admin/user/create','App\Http\Controllers\UserController@create')->n
 Route::post('/admin/user/create','App\Http\Controllers\UserController@store')->name('user.store');
 
 Route::delete('/admin/user/destroy','App\Http\Controllers\UserController@destroy')->name('user.destroy');
+
+Route::patch('admin/user/{user}/role/attach','App\Http\Controllers\AdminController@roleattach')->name('role.attach');
+
+Route::delete('admin/user/{user}/role/detach','App\Http\Controllers\AdminController@roledetach')->name('role.detach');

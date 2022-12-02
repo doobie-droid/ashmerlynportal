@@ -150,7 +150,8 @@ class UserController extends Controller
         //
         //to get the probable age of the sixteen year olds in school
         $yearstart = Carbon::now()->year - 16;
-        return view('admin.users.edit', compact(['user', 'yearstart']));
+        $roles = Role::all();
+        return view('admin.users.edit', compact(['user', 'yearstart','roles']));
     }
 
     /**
