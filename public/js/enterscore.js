@@ -9,8 +9,8 @@ const element7 = document.createElement('input');
 const element8 = document.createElement('input');
 
 
-function submitFunction(input1, input2, input3,year_id, user_id,subject_id) {
-
+function submitFunction(input1, input2, input3, year_id, user_id, subject_id) {
+    console.log(input1)
     form.method = "POST";
     form.action = "/staff/scores/edit";
 
@@ -49,7 +49,6 @@ function submitFunction(input1, input2, input3,year_id, user_id,subject_id) {
 
     document.body.appendChild(form);
     console.log(input1)
-
 
 
     form.submit()

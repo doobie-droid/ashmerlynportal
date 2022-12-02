@@ -37,7 +37,7 @@
                                                                                  data-arm_id="{{$arm->id}}"
                                                                                  data-year_name="{{$class->slug}}"
                                                                                  data-arm_name="{{$arm->slug}}"
-                                                                                 class="btn btn-outline-dark btn-circle"><i
+                                                                                 class="btn btn-outline-danger btn-circle"><i
                                                             class="fas fa-solid  fa-trash "></i>
                                                             </button></span> <a
                                                     href="{{route('class.profile',[$class->id,$arm->id])}}"> {{'Year '.$class->slug.' '.$arm->name }}</a>

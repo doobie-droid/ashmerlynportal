@@ -22,9 +22,10 @@ class ArmController extends Controller
 
     public function store(Request $request)
     {
+        $admin_token = env('ADMIN_TOKEN');
         $inputs = Request()->validate([
             'name' => ['required', 'unique:arms'],
-            'password' => 'current_password',
+            'administratortoken' => ["required", "max:255", "regex:($admin_token)"]
         ]);
         $inputs['name'] = Str::ucfirst(Str::lower($inputs['name']));
         $inputs['slug'] = Str::of(Str::lower($inputs['name']))->slug('-');
