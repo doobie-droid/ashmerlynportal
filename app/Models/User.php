@@ -138,10 +138,10 @@ class User extends Authenticatable
 
     public function getYearName($id){
         if($id == null){
-            return 'null';
+            return 'Void';
         }
         $year = Year::find($id);
-        return Str::ucfirst($year->slug);
+        return Str::ucfirst($year->name);
     }
 
     public function year(){

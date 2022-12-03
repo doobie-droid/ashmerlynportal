@@ -151,7 +151,8 @@
                     Profile
                 </a>
                 <a class="dropdown-item" href="{{route('user.password.edit',\Illuminate\Support\Facades\Auth::user()->id)}}">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+
                     Change Password
                 </a>
                 @can('adminAuth',\App\Models\User::class)
@@ -159,6 +160,10 @@
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
                 </a>
+                    <a class="dropdown-item" href="{{route('app.settings')}}">
+                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                        App Settings
+                    </a>
                 @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
