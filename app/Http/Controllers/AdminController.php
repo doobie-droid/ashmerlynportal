@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Arm;
 use App\Models\Detail;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Year;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -192,6 +194,21 @@ class AdminController extends Controller
         $details = Detail::find(1);
         $details->entry_year = request()->entry_year;
         $details->save();
+        return back();
+    }
+
+    public function student_arm_edit(Year $year){
+        $students=  Role::where('slug', 'student')
+            ->with('users', function ($query) {
+                $query->where('status', 1);
+            })->get()->first()->users->where('year_id',$year->id);
+        return view('admin.years.assign-student-arm',compact(['year','students']));
+    }
+    public function student_arm_update(Year $year){
+        $student = User::find(request()->user_id);
+        $student->arm_id = request()->arm_id;
+        $student->save();
+        Session::flash('message',$student->surname.' '.$student->firstname.' is now in Year '.$year->slug.' '.Arm::find(request()->arm_id)->name);
         return back();
     }
     public function destroy($id)

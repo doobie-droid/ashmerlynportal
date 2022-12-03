@@ -65,7 +65,7 @@
                                             <button type="submit" class="btn btn-outline-primary float-end"> Add New
                                                 Arm
                                             </button>
-
+                                            <a href="{{route('student.arm.assign.edit',$class->id)}}">Click to Assign Arms to Year {{$class->slug}} students</a>
 
                                         </form>
                                     </div>

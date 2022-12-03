@@ -113,6 +113,7 @@ class TeacherController extends Controller
                     'user_id' => request()->user_id,
                     'year_id' => request()->year_id,
                     'subject_id' => request()->subject_id,
+                    'arm_id'=>request()->arm_id,
                     'exam' => $detail->exam,
                     'score_1' => request()->score_1,
                     'score_2' => request()->score_2,
