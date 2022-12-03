@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->string('year_id')->references('id')->on('years')->constrained();
+            $table->string('arm_id')->references('id')->on('arms')->constrained();
             $table->string('subject_id')->references('id')->on('subjects')->constrained();
             $table->boolean('exam');
             $table->float('score_1');

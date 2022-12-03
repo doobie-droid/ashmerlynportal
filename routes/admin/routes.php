@@ -7,6 +7,10 @@ Route::get('/admin/users/activities/{activity_type}/log','App\Http\Controllers\A
 
 Route::get('/admin/users','App\Http\Controllers\UserController@index')->name('user.index');
 
+Route::get('/admin/users/student/{year}/arm_assign','App\Http\Controllers\AdminController@student_arm_edit')->name('student.arm.assign.edit');
+
+Route::patch('/admin/users/student/{year}/arm_assign','App\Http\Controllers\AdminController@student_arm_update')->name('student.arm.assign.update');
+
 Route::get('/admin/users/{status}/search','App\Http\Controllers\UserController@show')->name('user.show');
 
 Route::get('/admin/users/active','App\Http\Controllers\UserController@activeindex')->name('user.active-index');

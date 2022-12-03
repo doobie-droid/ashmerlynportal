@@ -176,6 +176,11 @@
                                                                             class="form-control"
                                                                             hidden value="{{$subject->id}}"
                                                                             name="subject_id">
+                                                                        <input
+                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_arm_id'}}"
+                                                                            class="form-control"
+                                                                            hidden value="{{$user->arm_id}}"
+                                                                            name="arm_id">
                                                                     </form>
                                                                 </td>
                                                                 <td>
@@ -185,7 +190,8 @@
                                                                             {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}},
                                                                             {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_year_id'}},
                                                                             {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_user_id'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_subject_id'}})'
+                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_subject_id'}},
+                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_arm_id'}})'
                                                                             class="btn btn-outline-primary btn-circle">
                                                                         <i class="fas fa-check"></i></button>
                                                                 </td>
