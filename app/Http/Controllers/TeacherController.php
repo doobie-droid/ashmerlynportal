@@ -88,10 +88,9 @@ class TeacherController extends Controller
         $detail = Detail::find(1);
         //
 
-        if (request()->score_1 < $detail->small_value && request()->score_1 > 0 &&
-            request()->score_2 < $detail->small_value && request()->score_2 > 0 &&
-            request()->score_3 < $detail->large_value && request()->score_3 > 0) {
-
+        if (request()->score_1 <= $detail->small_value && request()->score_1 >= 0 &&
+            request()->score_2 <= $detail->small_value && request()->score_2 >= 0 &&
+            request()->score_3 <= $detail->large_value && request()->score_3 >= 0) {
             $validation_passed = true;
         } else {
             Session::flash('error-message', 'Fill all the fields for ' . auth()->user()->getName(request()->user_id) . ' properly. Invalid Input!');
@@ -105,6 +104,8 @@ class TeacherController extends Controller
                 $score->score_1 = request()->score_1;
                 $score->score_2 = request()->score_2;
                 $score->score_3 = request()->score_3;
+                $score->score_total = request()->score_1+request()->score_2+request()->score_3;
+                $score->teacher_id = auth()->user()->id;
                 $score->save();
                 Session::flash('info-message', 'The changes made for ' . auth()->user()->getName(request()->user_id) . ' has been recorded');
             } else {
@@ -116,6 +117,7 @@ class TeacherController extends Controller
                     'score_1' => request()->score_1,
                     'score_2' => request()->score_2,
                     'score_3' => request()->score_3,
+                    'score_total'=>request()->score_1+request()->score_2+request()->score_3,
                     'entry_year' => $detail->entry_year,
                     'term' => $detail->term,
                     'teacher_id' => auth()->user()->id

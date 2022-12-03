@@ -171,8 +171,12 @@ class AdminController extends Controller
         $details = Detail::find(1);
         if(request()->exam == 1){
             $details->exam = '1';
+            $details->small_value = 20;
+            $details->large_value = 60;
         }else{
             $details->exam = '0';
+            $details->small_value = 5;
+            $details->large_value = 10;
         }
         $details->save();
         return back();

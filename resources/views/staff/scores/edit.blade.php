@@ -131,7 +131,7 @@
                                                                         <input
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}}"
                                                                             class="form-control" type="number"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_1}}@endif
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_1}}@endif
                                                                             min="0" max="{{$detail->small_value}}"
                                                                             step="any"
                                                                             name="score_1">
@@ -148,7 +148,7 @@
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}}"
                                                                             class="form-control"
                                                                             type="number" min="0"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_2}}@endif
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_2}}@endif
                                                                             max="{{$detail->small_value}}"
                                                                             step="any" name="score_2">
                                                                     </form>
@@ -159,7 +159,7 @@
                                                                             id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}}"
                                                                             class="form-control"
                                                                             type="number" min="0"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->first())value={{$user->singleSubjectScore($subject->id)->get()->first()->score_3}}@endif
+                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_3}}@endif
                                                                             max="{{$detail->large_value}}"
                                                                             step="any" name="score_3">
                                                                         <input
