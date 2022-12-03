@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Detail;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -150,6 +151,45 @@ class AdminController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
+    public function app_setting_view(){
+        $details = Detail::find(1);
+        return view('admin.settings.index',compact(['details']));
+    }
+
+    public function showresult (){
+        $details = Detail::find(1);
+        if(request()->show_result == 1){
+            $details->show_result = '0';
+
+        }else{
+            $details->show_result = '1';
+        }
+        $details->save();
+        return back();
+    }
+    public function togglemode (){
+        $details = Detail::find(1);
+        if(request()->exam == 1){
+            $details->exam = '1';
+        }else{
+            $details->exam = '0';
+        }
+        $details->save();
+        return back();
+    }
+    public function changeterm (){
+
+        $details = Detail::find(1);
+        $details->term = request()->term;
+        $details->save();
+        return back();
+    }
+    public function changeyear (){
+        $details = Detail::find(1);
+        $details->entry_year = request()->entry_year;
+        $details->save();
+        return back();
+    }
     public function destroy($id)
     {
         //

@@ -32,3 +32,13 @@ Route::delete('/admin/user/destroy','App\Http\Controllers\UserController@destroy
 Route::patch('admin/user/{user}/role/attach','App\Http\Controllers\AdminController@roleattach')->name('role.attach');
 
 Route::delete('admin/user/{user}/role/detach','App\Http\Controllers\AdminController@roledetach')->name('role.detach');
+
+Route::get('admin/app/settings','App\Http\Controllers\AdminController@app_setting_view')->name('app.settings');
+
+Route::patch('admin/app/result/show','App\Http\Controllers\AdminController@showresult')->name('result.show');
+
+Route::patch('admin/app/mode/toggle','App\Http\Controllers\AdminController@togglemode')->name('mode.toggle');
+
+Route::patch('admin/app/term/change','App\Http\Controllers\AdminController@changeterm')->name('term.change');
+
+Route::patch('admin/app/year/change','App\Http\Controllers\AdminController@changeyear')->name('year.change');
