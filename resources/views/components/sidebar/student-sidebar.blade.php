@@ -19,8 +19,8 @@
     </a>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href=""><i class="fas fa-eye"></i><i class="fas fa-eye"></i> Check Examination</a>
-            <a class="collapse-item" href=""><i class="fas fa-eye"></i><i class="fas fa-eye"></i> Check Mid Term</a>
+            <a class="collapse-item" href="{{route('exam.view')}}"><i class="fas fa-eye"></i><i class="fas fa-eye"></i> Check Examination</a>
+            <a class="collapse-item" href="{{route('midterm.view')}}"><i class="fas fa-eye"></i><i class="fas fa-eye"></i> Check Mid Term</a>
         </div>
     </div>
 </li>
