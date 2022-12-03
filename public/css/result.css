@@ -1,0 +1,29 @@
+.container-pseudo {
+    padding-bottom: 90px;
+}
+.signatures {
+    height: 45px;
+    width: 120px;
+}
+.table-bordered > tbody > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
+    border: 1px solid #000000;
+}
+/* .table-bordered > tbody > tr > td:hover,
+.table-bordered > tbody > tr > th:hover,
+.table-bordered > tfoot > tr > td:hover,
+.table-bordered > tfoot > tr > th:hover,
+.table-bordered > thead > tr > td:hover,
+.table-bordered > thead > tr > th:hover {
+  border: 1px solid #ffffff;
+} */
+table {
+    border-collapse: inherit;
+}
+.table-hover > tbody > tr:hover {
+    color: white;
+}

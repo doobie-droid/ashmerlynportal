@@ -157,4 +157,13 @@ class User extends Authenticatable
             ->where('entry_year',$details->entry_year);
     }
 
+    public function examScores(){
+        $details = Detail::find(1);
+        return $this->hasMany(Score::class)
+            ->where('term',$details->term)
+            ->where('exam','1')
+            ->where('entry_year',$details->entry_year);
+    }
+
+
 }

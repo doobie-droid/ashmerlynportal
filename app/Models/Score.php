@@ -17,12 +17,39 @@ class Score extends Model
         'score_1',
         'score_2',
         'score_3',
+        'score_total',
         'entry_date',
         'term',
         'teacher_id'
     ];
 
-    public function chooseSubject($subject_id){
-        return 2;
+    public function getScore1Attribute($value)
+    {
+        return number_format($value, 1);
     }
+
+    public function getScore2Attribute($value)
+    {
+        return number_format($value, 1);
+    }
+    public function getScore3Attribute($value)
+    {
+        return number_format($value, 1);
+    }
+    public function getScoreTotalAttribute($value)
+    {
+        return number_format($value, 1);
+    }
+
+
+    public function subject(){
+        return $this->belongsTo(Subject::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function teacher(){
+        return $this->hasOne(User::class,'id','teacher_id');
+    }
+
 }
