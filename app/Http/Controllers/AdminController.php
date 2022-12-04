@@ -206,6 +206,10 @@ class AdminController extends Controller
     }
     public function student_arm_update(Year $year){
         $student = User::find(request()->user_id);
+        foreach($student->examScores as $score){
+            $score->arm_id = request()->arm_id;
+            $score->save();
+        }
         $student->arm_id = request()->arm_id;
         $student->save();
         Session::flash('message',$student->surname.' '.$student->firstname.' is now in Year '.$year->slug.' '.Arm::find(request()->arm_id)->name);

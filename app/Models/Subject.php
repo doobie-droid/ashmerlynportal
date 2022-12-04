@@ -37,7 +37,6 @@ class Subject extends Model
 
     public function subjectPositionYearExam()
     {
-        $details = Detail::find(1);
         $score_collection = $this->subjectYearAverageExam()->get();
         $counter = 0;
         foreach ($score_collection as $user_score) {
@@ -56,6 +55,21 @@ class Subject extends Model
             ->where('term', $details->term)
             ->where('exam', '1')
             ->where('entry_year', $details->entry_year)
-            ->where('year_id', auth()->user()->year_id);
+            ->where('year_id', auth()->user()->year_id)
+            ->where('arm_id',auth()->user()->arm_id)
+            ->orderBy('score_total', 'desc');
+    }
+
+    public function subjectPositionArmExam()
+    {
+        $score_collection = $this->subjectArmAverageExam()->get();
+        $counter = 0;
+        foreach ($score_collection as $user_score) {
+            $counter += 1;
+            if ($user_score->user_id == auth()->user()->id) {
+                return $counter.'/'.count($score_collection);
+            }
+        }
+        return "no match";
     }
 }

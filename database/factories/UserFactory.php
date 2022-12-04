@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'middlename' => fake()->firstName(),
             'surname' => fake()->lastName(),
             'year_id'=>fake()->numberBetween(1,9),
+            'arm_id'=>fake()->numberBetween(1,9),
             'email' => fake()->unique()->safeEmail(),
             'phone_number'=>fake()->phoneNumber(),
             'date_of_birth'=>fake()->dateTimeThisCentury(),

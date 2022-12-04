@@ -19,7 +19,7 @@
     </a>
     <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href=""><i class="fas fa-eye"></i> View Students</a>
+            <a class="collapse-item" href="{{route('form_teacher.edit',auth()->user()->id)}}"><i class="fas fa-eye"></i> View Students</a>
         </div>
     </div>
 </li>

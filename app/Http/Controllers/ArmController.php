@@ -66,6 +66,10 @@ class ArmController extends Controller
         $year->arms()->updateExistingPivot(request()->arm_id, [
             'user_id' => request()->teacher_id,
         ]);
+        $teacher = User::find(request()->teacher_id);
+        $teacher->year_id = request()->year_id;
+        $teacher->arm_id = request()->arm_id;
+        $teacher->save();
         Session::flash('message', auth()->user()->getName(request()->teacher_id) . ' is now a seated teacher in Year ' . $year->slug . ' ' . $arm->slug);
         return back();
     }
