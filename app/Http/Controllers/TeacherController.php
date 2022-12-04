@@ -132,6 +132,19 @@ class TeacherController extends Controller
         return back();
     }
 
+    public function form_teacher_edit(User $user){
+        $this->authorize('view',$user);
+        $students=  Role::where('slug', 'student')
+            ->with('users', function ($query) {
+                $query->where('status', 1);
+            })->get()->first()->users->where('year_id',$user->year_id)->where('arm_id',$user->arm_id);
+        return view('staff.form-teacher.edit',compact(['students','user']));
+    }
+
+    public function form_teacher_update(User $user){
+        $this->authorize('view',$user);
+        return request();
+    }
     /**
      * Remove the specified resource from storage.
      *

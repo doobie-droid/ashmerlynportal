@@ -120,7 +120,7 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($class->users as $user)
-                                                        @if($user->roles->contains($student_role) )
+                                                        @if($user->roles->contains($student_role)  )
                                                             <tr>
                                                                 <td>
                                                                     {{$user->surname.' '.$user->firstname}}

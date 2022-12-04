@@ -8,3 +8,6 @@ Route::get('/staff/scores/{user}/edit', 'App\Http\Controllers\TeacherController@
 
 Route::patch('/staff/scores/edit', 'App\Http\Controllers\TeacherController@update')->name('score.update');
 
+Route::get('/staff/form_teacher/{user}/edit', 'App\Http\Controllers\TeacherController@form_teacher_edit')->name('form_teacher.edit');
+
+Route::patch('/staff/form_teacher/{user}/update', 'App\Http\Controllers\TeacherController@form_teacher_update')->name('form_teacher.update');

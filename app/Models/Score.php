@@ -12,6 +12,7 @@ class Score extends Model
     protected $fillable = [
         'user_id',
         'year_id',
+        'arm_id',
         'subject_id',
         'exam',
         'score_1',

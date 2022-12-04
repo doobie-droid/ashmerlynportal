@@ -148,6 +148,10 @@ class User extends Authenticatable
         return $this->belongsTo(Year::class);
     }
 
+    public function arm(){
+        return $this->belongsTo(Arm::class);
+    }
+
     public function singleSubjectScore($subject_id){
         $details = Detail::find(1);
         return $this->hasOne(Score::class)
@@ -164,6 +168,7 @@ class User extends Authenticatable
             ->where('exam','1')
             ->where('entry_year',$details->entry_year);
     }
+
 
 
 }
