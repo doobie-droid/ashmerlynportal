@@ -158,7 +158,7 @@
 
                                             <td colspan="5"><b>Position in Class</b></td>
 
-                                            <td>1/21</td>
+                                            <td>{{$user->year->currentTermArmPosition()}}</td>
                                             <td colspan="2">Class Teacher:</td>
 
                                             <td colspan="2">
@@ -167,9 +167,9 @@
                                         </tr>
                                         <tr>
                                             <td scope="row" style="height: 45px" colspan="2">Class Average</td>
-                                            <td>95.6</td>
+                                            <td>{{round($user->year->currentTermArmAverage->avg('mean'),1)}}</td>
                                             <td colspan="5"><b>Position in Year</b></td>
-                                            <td>1/72</td>
+                                            <td>{{$user->year->currentTermYearPosition()}}</td>
                                             <td colspan="2">Principal:</td>
                                             <td colspan="2">
                                                 {{$user->surname.' '.$user->firstname}} is self confident and if he
@@ -179,7 +179,7 @@
                                         </tr>
                                         <tr>
                                             <td scope="row" style="height: 45px" colspan="2">Year Average</td>
-                                            <td>95.6</td>
+                                            <td>{{round($user->year->currentTermYearAverage->avg('mean'),1)}}</td>
 
                                             <td colspan="2">Signature</td>
 

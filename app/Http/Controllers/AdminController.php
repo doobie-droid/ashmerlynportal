@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Arm;
+use App\Models\Average;
 use App\Models\Detail;
 use App\Models\Role;
 use App\Models\User;
@@ -164,6 +165,29 @@ class AdminController extends Controller
             $details->show_result = '0';
 
         }else{
+            $students = Role::where('slug', 'student')
+                ->with('users', function ($query) {
+                    $query->where('status', 1);
+                })->get()->first()->users;
+
+            foreach ($students as $student) {
+                if ($student->currentTermAverage) {
+                    $average = Average::find($student->currentTermAverage->id);
+                    $average->mean = $student->examScores->avg('score_total');
+                    $average->arm_id = $student->arm_id;
+                    $average->save();
+                } else {
+                    Average::create([
+                        'user_id' => $student->id,
+                        'year_id' => $student->year_id,
+                        'arm_id' => $student->arm_id,
+                        'mean' => $student->examScores->avg('score_total'),
+                        'entry_year' => Detail::find(1)->entry_year,
+                        'term' => Detail::find(1)->term
+                    ]);
+                }
+
+            }
             $details->show_result = '1';
         }
         $details->save();
@@ -213,6 +237,14 @@ class AdminController extends Controller
         $student->arm_id = request()->arm_id;
         $student->save();
         Session::flash('message',$student->surname.' '.$student->firstname.' is now in Year '.$year->slug.' '.Arm::find(request()->arm_id)->name);
+        return back();
+    }
+
+    public function honor_roll_edit(){
+        return view('honor-roll');
+    }
+
+    public function honor_roll_update(){
         return back();
     }
     public function destroy($id)

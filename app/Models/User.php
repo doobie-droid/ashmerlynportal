@@ -169,6 +169,13 @@ class User extends Authenticatable
             ->where('entry_year',$details->entry_year);
     }
 
+    public function currentTermAverage(){
+        $details = Detail::find(1);
+        return $this->hasOne(Average::class)
+            ->where('term',$details->term)
+            ->where('entry_year',$details->entry_year)
+            ->where('year_id',$this->year_id);
+    }
 
 
 }

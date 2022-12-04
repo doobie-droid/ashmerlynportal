@@ -53,7 +53,7 @@
     @endcan
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+        <a class="nav-link collapsed" href="{{route('honor_roll.edit')}}" data-toggle="collapse" data-target="#collapseFive"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-list"></i><span>Honour's Roll</span>
         </a>
