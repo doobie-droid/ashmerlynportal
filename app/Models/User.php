@@ -30,6 +30,8 @@ class User extends Authenticatable
         'status',
         'gender',
         'avatar',
+        'year_id',
+        'arm_id',
         'date_of_birth',
         'phone_number'
     ];

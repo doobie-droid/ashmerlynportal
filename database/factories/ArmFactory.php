@@ -21,7 +21,7 @@ class ArmFactory extends Factory
         //I used the faker values for jobs to replace the different arms
 
         $index = count(Arm::all());
-        $arm_array = ['Faith','Joy','Celebration','Peace','Love','Goodness','Kindness','Mercy','Temperance','Long Suffering'];
+        $arm_array = ['Faith','Joy','Peace','Love','Goodness','Kindness','Mercy','Temperance','Long Suffering'];
         return [
             'name'=>$arm_array[$index],
             'slug' => Str::of(Str::lower($arm_array[$index]))->slug('-'),

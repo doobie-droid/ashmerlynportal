@@ -20,9 +20,10 @@ class YearFactory extends Factory
     public function definition()
     {
         $index = count(Year::all()) +1;
-        $slugs = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+        $names= [0,7,8,9,10,11,12];
+        $slugs = ['zero','seven','eight','nine','ten','eleven','twelve'];
         return [
-            'name'=> $index,
+            'name'=> $names[$index],
             'slug'=>Str::lower($slugs[$index]),
         ];
     }
