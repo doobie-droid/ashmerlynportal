@@ -20,7 +20,7 @@ class SubjectFactory extends Factory
     public function definition()
     {
         $index = count(Subject::all());
-        $subject_array = ['Mathematics','Accounting','Economics','Further Mathematics','History','Agricultural Science','Christian Religious Studies','English Language','Chemistry','Physics','Home Economics','Biology','Fine Arts','Music'];
+        $subject_array = ['Mathematics','Geography','Accounting','Economics','Further Mathematics','History','Agricultural Science','Christian Religious Studies','English Language','Chemistry','Physics','Home Economics','Biology','Fine Arts','Music'];
         return [
             'name'=>$subject_array[$index],
             'slug' => Str::of(Str::lower($subject_array[$index]))->slug('-'),

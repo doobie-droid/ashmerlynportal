@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Year;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,8 @@ class UserController extends Controller
         $roles = Role::where('name', '!=', 'Administrator')->get();
         //to get the probable age of the sixteen year olds in school
         $yearstart = Carbon::now()->year - 16;
-        return view('admin.users.create', compact(['roles', 'yearstart']));
+        $years = Year::all();
+        return view('admin.users.create', compact(['roles', 'yearstart','years']));
     }
 
     /**
@@ -80,6 +82,7 @@ class UserController extends Controller
             'gender' => ['required'],
             'roles' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'year_id'=>['string']
         ]);
         if (request('avatar')) {
             $inputs['avatar'] = request('avatar')->store('images');
@@ -151,7 +154,8 @@ class UserController extends Controller
         //to get the probable age of the sixteen year olds in school
         $yearstart = Carbon::now()->year - 16;
         $roles = Role::all();
-        return view('admin.users.edit', compact(['user', 'yearstart','roles']));
+        $years = Year::all();
+        return view('admin.users.edit', compact(['user', 'yearstart','roles','years']));
     }
 
     /**
@@ -172,6 +176,7 @@ class UserController extends Controller
             'phone_number' => 'nullable|size:11',
             'date_of_birth' => 'nullable|date',
             'gender' => ['required'],
+            'year_id'=>['string']
         ]);
         if (request('avatar')) {
             $inputs['avatar'] = request('avatar')->store('images');

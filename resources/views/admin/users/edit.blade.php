@@ -132,6 +132,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label>Class</label>
+
+                            <select class="form-control" id="year_id" name="year_id">
+                                <option>None</option>
+                                @foreach($years as $year)
+                                <option @if($user->year->id == $year->id)  selected @endif value="{{$year->id}}">Year {{$year->slug}}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <br><br>

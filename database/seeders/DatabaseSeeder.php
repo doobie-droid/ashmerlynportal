@@ -23,19 +23,19 @@ class DatabaseSeeder extends Seeder
         //Populating a many-to-many relationship on the database
         User::factory()->count(50)->create();
 
-        $roles = Role::where('id','<>',1)->get();
+        $roles = Role::where('id','>',2)->get();
 
          //Populate the pivot table
         User::where('id','>',1)->each(function ($user) use ($roles) {
             $user->roles()->attach(
-                $roles->random(rand(1, 2))->pluck('id')->toArray()
+                $roles->random(1)->pluck('id')->toArray()
             );
         });
 
 
-        if(count(Activity::all()) <= 40){
-            Activity::factory()->count(40)->create();
-            $elements = [1,2,3,4,5,6,7,8,9];
+        if(count(Activity::all()) <= 10){
+            Activity::factory()->count(10)->create();
+            $elements = [1,2,3,4,5,6];
             //for some reason which I am yet to figure out, calling the factory 7 times make the factory repeat the
             //exact same action in the same state, so there are problems because most of the name fields must be unique
             foreach($elements as $element){
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             // and attaches it to a year
             Year::all()->each(function ($year) use ($subjects) {
                 $year->subjects()->attach(
-                    $subjects->random(rand(7, 9))->pluck('id')->toArray()
+                    $subjects->random(rand(4, 6))->pluck('id')->toArray()
                 );
             });
             //populate the year arm pivot table

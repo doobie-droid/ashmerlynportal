@@ -130,6 +130,20 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3">
+                    <label for="gender" class="col-md-4 col-form-label ">{{ __('Class:') }}</label></div>
+                <div class="col-md-8">
+
+                    <select class="form-control" id="year" name="year_id">
+                        <option >None </option>
+                       @foreach($years as $year)
+                            <option value='{{$year->id}}'>Year {{$year->slug}} </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
                     <label for="gender" class="col-md-4 col-form-label ">{{ __('Gender:') }}</label></div>
                 <div class="col-md-8">
 
