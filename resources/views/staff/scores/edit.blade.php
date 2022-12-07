@@ -1,62 +1,23 @@
 <x-portal-layout>
     @section('styles')
-        <style>
-            .project-tab {
-                padding: 10%;
-                margin-top: -8%;
-            }
-
-            .project-tab #tabs {
-                background: #007b5e;
-                color: #eee;
-            }
-
-            .project-tab #tabs h6.section-title {
-                color: #eee;
-            }
-
-            .project-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-                color: #0062cc;
-                background-color: transparent;
-                border-color: transparent transparent #f3f3f3;
-                border-bottom: 3px solid !important;
-                font-size: 16px;
-                font-weight: bold;
-            }
-
-            .project-tab .nav-link {
-                border: 1px solid transparent;
-                border-top-left-radius: .25rem;
-                border-top-right-radius: .25rem;
-                color: #0062cc;
-                font-size: 16px;
-                font-weight: 600;
-            }
-
-            .project-tab .nav-link:hover {
-                border: none;
-            }
-
-            .project-tab thead {
-                background: #f3f3f3;
-                color: #333;
-            }
-
-            .project-tab a {
-                text-decoration: none;
-                color: #333;
-                font-weight: 600;
-            }
-        </style>
+        <link href="{{asset('css/general.css')}}" rel="stylesheet">
     @endsection
     @section("content")
-        @if(\Illuminate\Support\Facades\Session::has('error-message'))
-            <div class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('error-message')}}</div>
-        @elseif(\Illuminate\Support\Facades\Session::has('success-message'))
-            <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success-message')}}</div>
+        @if(\Illuminate\Support\Facades\Session::has('success-message'))
+            <div class="alert sticky-top alert-success " style="z-index: 200">{{\Illuminate\Support\Facades\Session::get('success-message')}}</div>
         @elseif(\Illuminate\Support\Facades\Session::has('info-message'))
-            <div class="alert alert-info">{{\Illuminate\Support\Facades\Session::get('info-message')}}</div>
+            <div class="alert  sticky-top alert-info" style="z-index: 200">{{\Illuminate\Support\Facades\Session::get('info-message')}}</div>
         @endif
+        @error('score_1')
+        <div class="alert alert-danger sticky-top" style="z-index: 200">{{$message}}</div>
+        @enderror
+        @error('score_2')
+        <div class="alert alert-danger sticky-top" style="z-index: 200">{{$message}}</div>
+        @enderror
+        @error('score_3')
+        <div class="alert alert-danger sticky-top" style="z-index: 200">{{$message}}</div>
+        @enderror
+
 
         <section id="tabs" class="project-tab">
             <span id="token" class="ghost">{{csrf_token()}}</span>
@@ -93,18 +54,18 @@
                                         <th>Name</th>
                                         <th>Class</th>
                                         <th>@if(+$detail->exam == 1 )
-                                                C.A. 1
+                                                C.A.Test 1
                                             @else
                                                 Assignment
                                             @endif</th>
                                         <th>@if(+$detail->exam == 1 )
-                                                C.A. 2
+                                                C.A.Test 2
                                             @else
                                                 Classwork
                                             @endif</th>
                                         </th>
                                         <th>@if(+$detail->exam == 1 )
-                                                Exam
+                                                Exam Scores
                                             @else
                                                 Test
 
@@ -116,7 +77,7 @@
                                     <tbody>
                                     @foreach($year->users as $user)
                                         @if($user->roles->contains($student_role)  )
-                                            <tr>
+                                            <tr >
                                                 <td>
                                                     {{$user->surname.' '.$user->firstname}}
                                                 </td>
@@ -129,12 +90,14 @@
                                                     <form>
                                                         <input
                                                             id="{{'nav_home_'.($loop->index + 1).'_1'}}"
-                                                            class="form-control" type="number"
-                                                            value={{$user->singleSubjectScore($subject->id)->get()->last() ?
-                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_1: ''}}
-                                                                            min="0" max="{{$detail->small_value}}"
+                                                            class="form-control-sm form-control" type="number" min="0"
+                                                            max="{{$detail->small_value}}"
                                                             step="any"
-                                                            name="score_1">
+                                                            name="score_1"
+                                                            value={{$user->singleSubjectScore($subject->id)->get()->last() ?
+                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_1: ''}}>
+
+
                                                     </form>
 
                                                 </td>
@@ -142,22 +105,21 @@
                                                     <form>
                                                         <input
                                                             id="{{'nav_home_'.($loop->index + 1).'_2'}}"
-                                                            class="form-control"
-                                                            type="number" min="0"
+                                                            class="form-control-sm form-control"
+                                                            type="number" min="0" step="any" name="score_2"
                                                             value={{$user->singleSubjectScore($subject->id)->get()->last() ?
-                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_2: ''}}
-                                                                        step="any" name="score_2">
+                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_2: ""}} >
                                                     </form>
                                                 </td>
                                                 <td>
                                                     <form>
                                                         <input
                                                             id="{{'nav_home_'.($loop->index + 1).'_3'}}"
-                                                            class="form-control"
-                                                            type="number" min="0"
+                                                            class="form-control-sm form-control"
+                                                            type="number" min="0" step="any" name="score_3"
                                                             value={{$user->singleSubjectScore($subject->id)->get()->last() ?
                                                                       $user->singleSubjectScore($subject->id)->get()->last()->score_3: ''}}
-                                                                        step="any" name="score_3">
+                                                        >
                                                         <input
                                                             id="{{'nav_home_'.($loop->index + 1).'_user_id'}}"
                                                             class="form-control"
@@ -171,15 +133,17 @@
                                                 </td>
                                                 <td>
                                                     <button type="submit"
-                                                            onclick='submitFunction({{'nav_home_'.($loop->index + 1).'_1'}},
+                                                            onclick="submitFunction({{'nav_home_'.($loop->index + 1).'_1'}},
                                                                             {{'nav_home_'.($loop->index + 1).'_2'}},
                                                                             {{'nav_home_'.($loop->index + 1).'_3'}},
                                                                             {{'nav_home_'.($loop->index + 1).'_user_id'}},
-                                                                            {{'nav_home_'.($loop->index + 1).'_arm_id'}})'
+                                                                            {{'nav_home_'.($loop->index + 1).'_arm_id'}},
+                                                                            {{$loop->index}})"
                                                             class="btn btn-outline-primary btn-circle">
                                                         <i class="fas fa-check"></i></button>
                                                 </td>
                                             </tr>
+
                                         @endif
                                     @endforeach
                                     </tbody>
