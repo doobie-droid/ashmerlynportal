@@ -62,7 +62,7 @@ function submitFunction(input1, input2, input3, user_id, arm_id, index) {
         window.localStorage.setItem('score_entry_location', `#nav-home`);
     }
 
-    // form.submit();
+    form.submit();
 }
 
 
