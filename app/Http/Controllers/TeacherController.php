@@ -10,6 +10,7 @@ use App\Models\Subject;
 use App\Models\User;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class TeacherController extends Controller
@@ -62,16 +63,25 @@ class TeacherController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $user,Year $year,Subject $subject)
     {
         //
-//         return User::find(2)->singlesubjectScore(2)->get();
         $this->authorize("view", $user);
-        $classes = Year::all();
-        $detail = Detail::find(1);
-        $teacher_role = Role::where('slug', 'teacher')->get()->first();
-        $student_role = Role::where('slug', 'student')->get()->first();
-        return view('staff.scores.edit', compact(['classes', 'student_role', 'teacher_role', 'detail']));
+        $is_authorized = DB::table('subject_year')
+            ->where('user_id',$user->id)
+            ->where('year_id',$year->id)
+            ->where('subject_id',$subject->id)
+            ->get()
+            ->first();
+        if($is_authorized){
+            $detail = Detail::find(1);
+            $teacher_role = Role::where('slug', 'teacher')->get()->first();
+            $student_role = Role::where('slug', 'student')->get()->first();
+            return view('staff.scores.edit', compact([ 'student_role', 'teacher_role', 'detail','year','subject']));
+        }else{
+            abort(403);
+        }
+
     }
 
     /**

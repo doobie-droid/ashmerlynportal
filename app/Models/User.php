@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -177,6 +178,10 @@ class User extends Authenticatable
             ->where('term',$details->term)
             ->where('entry_year',$details->entry_year)
             ->where('year_id',$this->year_id);
+    }
+
+    public function subjectTeacher(){
+        return DB::table('subject_year')->where('user_id',auth()->user()->id)->get();
     }
 
 

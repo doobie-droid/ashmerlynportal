@@ -61,157 +61,136 @@
         <section id="tabs" class="project-tab">
             <span id="token" class="ghost">{{csrf_token()}}</span>
 
+            <span id="year_id" class="ghost">{{$year->id}}</span>
+
+            <span id="subject_id" class="ghost">{{$subject->id}}</span>
+
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        @if($classes)
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
-                            <nav>
-                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    @foreach($classes as $class)
-                                        @if(count($class->subjectTeacher)>0)
-                                            @foreach($class->subjectTeacher as $subject)
 
-                                                <a class="nav-item nav-link @if($loop->first && $loop->parent->first) active @endif"
-                                                   id="{{'nav-home-tab_'.$class->id.'_'.$subject->id}}"
-                                                   data-toggle="tab"
-                                                   href="{{'#nav-home_'.$class->id.'_'.$subject->id}}" role="tab"
-                                                   aria-controls="{{'nav-home_'.$class->id.'_'.$subject->id}}"
-                                                   aria-selected="true">{{'Year '.auth()->user()->getYearName($subject->pivot->year_id).' '.$subject->name}}</a>
+                                <a class="nav-item nav-link active"
+                                   id="'nav-home-tab"
+                                   data-toggle="tab"
+                                   href="#nav-home" role="tab"
+                                   aria-controls="nav-home"
+                                   aria-selected="true">{{'Year '.$year->slug.' '.$subject->name}}</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content mobile-overflow" id="nav-tabContent">
 
-                                            @endforeach
+
+                            <div
+                                class="tab-pane fade  show active "
+                                id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+                                <table class="table" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                        <th>@if(+$detail->exam == 1 )
+                                                C.A. 1
+                                            @else
+                                                Assignment
+                                            @endif</th>
+                                        <th>@if(+$detail->exam == 1 )
+                                                C.A. 2
+                                            @else
+                                                Classwork
+                                            @endif</th>
+                                        </th>
+                                        <th>@if(+$detail->exam == 1 )
+                                                Exam
+                                            @else
+                                                Test
+
+                                            @endif</th>
+                                        </th>
+                                        <th>Submit</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($year->users as $user)
+                                        @if($user->roles->contains($student_role)  )
+                                            <tr>
+                                                <td>
+                                                    {{$user->surname.' '.$user->firstname}}
+                                                </td>
+                                                @if($user->arm)
+                                                    <td>{{'Year '.$user->year->slug.' '.$user->arm->name}}</td>
+                                                @else
+                                                    <td>{{'Year '.$user->year->slug.' null' }}</td>
+                                                @endif
+                                                <td>
+                                                    <form>
+                                                        <input
+                                                            id="{{'nav_home_'.($loop->index + 1).'_1'}}"
+                                                            class="form-control" type="number"
+                                                            value={{$user->singleSubjectScore($subject->id)->get()->last() ?
+                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_1: ''}}
+                                                                            min="0" max="{{$detail->small_value}}"
+                                                            step="any"
+                                                            name="score_1">
+                                                    </form>
+
+                                                </td>
+                                                <td>
+                                                    <form>
+                                                        <input
+                                                            id="{{'nav_home_'.($loop->index + 1).'_2'}}"
+                                                            class="form-control"
+                                                            type="number" min="0"
+                                                            value={{$user->singleSubjectScore($subject->id)->get()->last() ?
+                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_2: ''}}
+                                                                        step="any" name="score_2">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form>
+                                                        <input
+                                                            id="{{'nav_home_'.($loop->index + 1).'_3'}}"
+                                                            class="form-control"
+                                                            type="number" min="0"
+                                                            value={{$user->singleSubjectScore($subject->id)->get()->last() ?
+                                                                      $user->singleSubjectScore($subject->id)->get()->last()->score_3: ''}}
+                                                                        step="any" name="score_3">
+                                                        <input
+                                                            id="{{'nav_home_'.($loop->index + 1).'_user_id'}}"
+                                                            class="form-control"
+                                                            hidden value="{{$user->id}}" name="user_id">
+                                                        <input
+                                                            id="{{'nav_home_'.($loop->index + 1).'_arm_id'}}"
+                                                            class="form-control"
+                                                            hidden value="{{$user->arm_id}}"
+                                                            name="arm_id">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <button type="submit"
+                                                            onclick='submitFunction({{'nav_home_'.($loop->index + 1).'_1'}},
+                                                                            {{'nav_home_'.($loop->index + 1).'_2'}},
+                                                                            {{'nav_home_'.($loop->index + 1).'_3'}},
+                                                                            {{'nav_home_'.($loop->index + 1).'_user_id'}},
+                                                                            {{'nav_home_'.($loop->index + 1).'_arm_id'}})'
+                                                            class="btn btn-outline-primary btn-circle">
+                                                        <i class="fas fa-check"></i></button>
+                                                </td>
+                                            </tr>
                                         @endif
                                     @endforeach
-                                </div>
-                            </nav>
-                            <div class="tab-content mobile-overflow" id="nav-tabContent">
-                                @foreach($classes as $class)
-                                    @if(count($class->subjectTeacher)>0)
-                                        @foreach($class->subjectTeacher as $subject)
+                                    </tbody>
+                                </table>
 
-                                            <div
-                                                class="tab-pane fade @if($loop->first && $loop->parent->first) show active @endif"
-                                                id="{{'nav-home_'.$class->id.'_'.$subject->id}}" role="tabpanel"
-                                                aria-labelledby="{{'nav-home-tab_'.$class->id.'_'.$subject->id}}">
-                                                <table class="table" cellspacing="0">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Class</th>
-                                                        <th>@if(+$detail->exam == 1 )
-                                                                C.A. 1
-                                                            @else
-                                                                Assignment
-                                                            @endif</th>
-                                                        <th>@if(+$detail->exam == 1 )
-                                                                C.A. 2
-                                                            @else
-                                                                Classwork
-                                                            @endif</th>
-                                                        </th>
-                                                        <th>@if(+$detail->exam == 1 )
-                                                                Exam
-                                                            @else
-                                                                Test
-
-                                                            @endif</th>
-                                                        </th>
-                                                        <th>Submit</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($class->users as $user)
-                                                        @if($user->roles->contains($student_role)  )
-                                                            <tr>
-                                                                <td>
-                                                                    {{$user->surname.' '.$user->firstname}}
-                                                                </td>
-                                                                <td>{{'Year '.$user->year->slug}}</td>
-                                                                <td>
-                                                                    <form>
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}}"
-                                                                            class="form-control" type="number"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_1}}@endif
-                                                                            min="0" max="{{$detail->small_value}}"
-                                                                            step="any"
-                                                                            name="score_1">
-                                                                        @error('score_1')
-                                                                        <div
-                                                                            class="invalid-feedback">{{ $message }}</div>
-                                                                        @enderror
-                                                                    </form>
-
-                                                                </td>
-                                                                <td>
-                                                                    <form>
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}}"
-                                                                            class="form-control"
-                                                                            type="number" min="0"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_2}}@endif
-                                                                            max="{{$detail->small_value}}"
-                                                                            step="any" name="score_2">
-                                                                    </form>
-                                                                </td>
-                                                                <td>
-                                                                    <form>
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}}"
-                                                                            class="form-control"
-                                                                            type="number" min="0"
-                                                                            @if($user->singleSubjectScore($subject->id)->get()->last())value={{$user->singleSubjectScore($subject->id)->get()->last()->score_3}}@endif
-                                                                            max="{{$detail->large_value}}"
-                                                                            step="any" name="score_3">
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_year_id'}}"
-                                                                            class="form-control"
-                                                                            hidden value="{{$class->id}}"
-                                                                            name="year_id">
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_user_id'}}"
-                                                                            class="form-control"
-                                                                            hidden value="{{$user->id}}" name="user_id">
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_subject_id'}}"
-                                                                            class="form-control"
-                                                                            hidden value="{{$subject->id}}"
-                                                                            name="subject_id">
-                                                                        <input
-                                                                            id="{{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_arm_id'}}"
-                                                                            class="form-control"
-                                                                            hidden value="{{$user->arm_id}}"
-                                                                            name="arm_id">
-                                                                    </form>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="submit"
-                                                                            onclick='submitFunction({{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_1'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_2'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_3'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_year_id'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_user_id'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_subject_id'}},
-                                                                            {{'nav_home_'.$class->id.'_'.$subject->id.'_'.($loop->index + 1).'_arm_id'}})'
-                                                                            class="btn btn-outline-primary btn-circle">
-                                                                        <i class="fas fa-check"></i></button>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-
-
-                                            </div>
-
-                                        @endforeach
-                                    @endif
-                                @endforeach
 
                             </div>
 
-                        @endif
+                        </div>
+
+
                     </div>
                 </div>
             </div>
