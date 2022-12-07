@@ -33,8 +33,10 @@ class Year extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class)->where('status', 1);
+        return $this->hasMany(User::class)->where('status', 1)->orderBy('arm_id')->orderBy('surname');
     }
+
+
 
     public function currentTermYearAverage()
     {

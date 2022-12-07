@@ -1,3 +1,4 @@
+
 const form = document.createElement("form");
 const element1 = document.createElement("input");
 const element2 = document.createElement("input");
@@ -9,7 +10,7 @@ const element7 = document.createElement('input');
 const element8 = document.createElement('input');
 const element9 = document.createElement('input')
 
-function submitFunction(input1, input2, input3, year_id, user_id, subject_id, arm_id) {
+function submitFunction(input1, input2, input3, user_id, arm_id) {
     console.log(input1)
     form.method = "POST";
     form.action = "/staff/scores/edit";
@@ -34,11 +35,11 @@ function submitFunction(input1, input2, input3, year_id, user_id, subject_id, ar
     element5.name = "score_3";
     form.appendChild(element5);
 
-    element6.value = subject_id.value;
+    element6.value = document.getElementById('subject_id').textContent;
     element6.name = "subject_id";
     form.appendChild(element6);
 
-    element7.value = year_id.value;
+    element7.value = document.getElementById('year_id').textContent;
     element7.name = "year_id";
     form.appendChild(element7);
 
