@@ -79,13 +79,14 @@ class TeacherController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
 
         $this->authorize("teacherAuth", User::class);
         $detail = Detail::find(1);
+        $teacher_id = auth()->user()->id;
         //
 
         if (request()->score_1 <= $detail->small_value && request()->score_1 >= 0 &&
@@ -99,13 +100,14 @@ class TeacherController extends Controller
         }
         if ($validation_passed) {
             $record = User::find(request()->user_id)->singleSubjectScore(request()->subject_id)->get()->last();
+
             if ($record) {
                 $score = Score::find($record->id);
                 $score->score_1 = request()->score_1;
                 $score->score_2 = request()->score_2;
                 $score->score_3 = request()->score_3;
                 $score->score_total = request()->score_1+request()->score_2+request()->score_3;
-                $score->teacher_id = auth()->user()->id;
+                $score->teacher_id = $teacher_id;
                 $score->save();
                 Session::flash('info-message', 'The changes made for ' . auth()->user()->getName(request()->user_id) . ' has been recorded');
             } else {
@@ -121,7 +123,7 @@ class TeacherController extends Controller
                     'score_total'=>request()->score_1+request()->score_2+request()->score_3,
                     'entry_year' => $detail->entry_year,
                     'term' => $detail->term,
-                    'teacher_id' => auth()->user()->id
+                    'teacher_id' => $teacher_id
 
                 ]);
                 Session::flash('success-message', 'You entered input for ' . auth()->user()->getName(request()->user_id) . ' has been recorded');

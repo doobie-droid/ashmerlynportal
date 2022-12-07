@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         });
 
 
-        if(count(Activity::all()) <= 10){
+        if(count(Activity::all()) < 10){
             Activity::factory()->count(10)->create();
             $elements = [1,2,3,4,5,6];
             //for some reason which I am yet to figure out, calling the factory 7 times make the factory repeat the
