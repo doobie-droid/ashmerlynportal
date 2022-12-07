@@ -57,6 +57,7 @@
         @elseif(\Illuminate\Support\Facades\Session::has('info-message'))
             <div class="alert alert-info">{{\Illuminate\Support\Facades\Session::get('info-message')}}</div>
         @endif
+
         <section id="tabs" class="project-tab">
             <span id="token" class="ghost">{{csrf_token()}}</span>
 
@@ -125,7 +126,7 @@
                                                                 <td>
                                                                     {{$user->surname.' '.$user->firstname}}
                                                                 </td>
-                                                                <td>{{'Year '.auth()->user()->getYearName($user->year_id)}}</td>
+                                                                <td>{{'Year '.$user->year->slug}}</td>
                                                                 <td>
                                                                     <form>
                                                                         <input

@@ -139,7 +139,7 @@
                             <select class="form-control" id="year_id" name="year_id">
                                 <option>None</option>
                                 @foreach($years as $year)
-                                <option @if($user->year->id == $year->id)  selected @endif value="{{$year->id}}">Year {{$year->slug}}</option>
+                                <option @if($user->year)@if($user->year->id == $year->id)  selected @endif @endif value="{{$year->id}}">Year {{$year->slug}}</option>
                                 @endforeach
 
                             </select>

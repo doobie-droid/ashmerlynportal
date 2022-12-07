@@ -54,7 +54,9 @@ function submitFunction(input1, input2, input3, year_id, user_id, subject_id, ar
     console.log(input1)
 
 
-    form.submit()
+    form.submit(function(e){
+
+    })
 
 
 }
