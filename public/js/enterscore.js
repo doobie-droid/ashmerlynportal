@@ -1,4 +1,9 @@
+$(document).ready(function () {
 
+    $("#contentdata").animate({
+        scrollTop: $(window.localStorage.getItem('score_entry_location')).offset().top
+    }, 5);
+});
 const form = document.createElement("form");
 const element1 = document.createElement("input");
 const element2 = document.createElement("input");
@@ -10,8 +15,7 @@ const element7 = document.createElement('input');
 const element8 = document.createElement('input');
 const element9 = document.createElement('input')
 
-function submitFunction(input1, input2, input3, user_id, arm_id) {
-    console.log(input1)
+function submitFunction(input1, input2, input3, user_id, arm_id, index) {
     form.method = "POST";
     form.action = "/staff/scores/edit";
 
@@ -52,14 +56,13 @@ function submitFunction(input1, input2, input3, user_id, arm_id) {
     form.appendChild(element9);
 
     document.body.appendChild(form);
-    console.log(input1)
+    if (+index > 5) {
+        window.localStorage.setItem('score_entry_location', `#nav_home_${index - 3}_1`);
+    }else {
+        window.localStorage.setItem('score_entry_location', `#nav-home`);
+    }
 
-
-    form.submit(function(e){
-
-    })
-
-
+    // form.submit();
 }
 
 
