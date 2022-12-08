@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //Populating a many-to-many relationship on the database
-        User::factory()->count(50)->create();
+        User::factory()->count(1000)->create();
 
-        $roles = Role::where('id','>',2)->get();
+        $roles = Role::where('id','>',1)->get();
 
          //Populate the pivot table
         User::where('id','>',1)->each(function ($user) use ($roles) {
             $user->roles()->attach(
-                $roles->random(1)->pluck('id')->toArray()
+                $roles->random(rand(1,3))->pluck('id')->toArray()
             );
         });
 

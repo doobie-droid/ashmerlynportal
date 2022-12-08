@@ -58,7 +58,7 @@ function submitFunction(input1, input2, input3, user_id, arm_id, index) {
     document.body.appendChild(form);
     if (+index > 5) {
         window.localStorage.setItem('score_entry_location', `#nav_home_${index - 3}_1`);
-    }else {
+    } else {
         window.localStorage.setItem('score_entry_location', `#nav-home`);
     }
 
