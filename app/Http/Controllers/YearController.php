@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Arm;
+use App\Models\Role;
 use App\Models\Subject;
+use App\Models\User;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use NumberFormatter;
 
@@ -81,8 +84,11 @@ class YearController extends Controller
         return back();
     }
 
-    public function showclassprofile(){
-        return view('admin.years.classprofile');
+    public function showclassprofile(Year $year, Arm $arm){
+        $this->authorize('adminAuth',User::class);
+        $student_role = Role::where('slug','student')->get()->first();
+        $teacher_details = DB::table('arm_year')->where('year_id',$year->id)->where('arm_id',$arm->id)->get()->first();
+        return view('admin.years.classprofile' ,compact(['year','arm','student_role','teacher_details']));
     }
 
 

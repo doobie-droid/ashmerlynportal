@@ -11,7 +11,10 @@ use App\Models\User;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
 {
@@ -93,18 +96,16 @@ class TeacherController extends Controller
      */
     public function update(Request $request)
     {
-
         $this->authorize("teacherAuth", User::class);
         $detail = Detail::find(1);
         $teacher_id = auth()->user()->id;
-        //
-
         $inputs = request()->validate([
             'score_1' => ['required', 'numeric', 'max:'.$detail->small_value, 'min:0'],
             'score_2' => ['required', 'numeric', 'max:'.$detail->small_value, 'min:0'],
             'score_3' => ['required', 'numeric', 'max:'.$detail->large_value, 'min:0'],
         ]);
         $record = User::find(request()->user_id)->singleSubjectScore(request()->subject_id)->get()->last();
+
         if ($record) {
             $score = Score::find($record->id);
             $score->score_1 = request()->score_1;
@@ -143,8 +144,9 @@ class TeacherController extends Controller
         $students = Role::where('slug', 'student')
             ->with('users', function ($query) {
                 $query->where('status', 1);
-            })->get()->first()->users->where('year_id', $user->year_id)->where('arm_id', $user->arm_id);
-        return view('staff.form-teacher.edit', compact(['students', 'user']));
+            })->get()->first()->users->where('year_id', $user->year_id)->where('arm_id', $user->arm_id)->sortBy('surname') ;
+        $columns = Schema::getColumnListing('aptitudes');
+        return view('staff.form-teacher.edit', compact(['students', 'user','columns']));
     }
 
     public function form_teacher_update(User $user)

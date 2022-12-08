@@ -3,6 +3,7 @@
         <link href="{{asset('css/general.css')}}" rel="stylesheet">
     @endsection
     @section("content")
+
         @if(\Illuminate\Support\Facades\Session::has('success-message'))
             <div class="alert sticky-top alert-success " style="z-index: 200">{{\Illuminate\Support\Facades\Session::get('success-message')}}</div>
         @elseif(\Illuminate\Support\Facades\Session::has('info-message'))
