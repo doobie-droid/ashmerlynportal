@@ -10,6 +10,7 @@ use App\Models\Subject;
 use App\Models\User;
 use App\Models\Year;
 use Illuminate\Database\Seeder;
+use App\Models\Detail;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,10 +21,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        
         //Populating a many-to-many relationship on the database
         User::factory()->count(100)->create();
 
         $this->runRoleMigration();
+
+        $user = User::find(1);
+        $user->roles()->attach(Role::find(1));
+        $user->roles()->attach(Role::find(3));
+
+        Detail::create([
+            'exam' => '1',
+            'term' => '1',
+            'small_value' => 20,
+            'large_value' => 60,
+            'entry_year' => now()->year,
+            'show_result' => '1',
+            'show_all_result' => '1'
+
+        ]);
 
         $roles = Role::where('id', '>', 1)->get();
 

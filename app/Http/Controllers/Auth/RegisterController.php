@@ -83,31 +83,7 @@ class RegisterController extends Controller
             'gender'=>$data['gender'],
             'password' => Hash::make($data['password']),
         ]);
-        if( count(User::all())==1){
-            $data = [
-                ['name'=>'Administrator', 'slug'=> 'administrator'],
-                ['name'=>'Student', 'slug'=> 'student'],
-                ['name'=>'Teacher', 'slug'=> 'teacher'],
-                ['name'=>'Parent', 'slug'=> 'parent'],
-            ];
-            foreach($data as $datum){
-                Role::create($datum);
-            }
-
-            
-            Detail::create([
-                'exam'=>'1',
-                'term'=>'1',
-                'small_value'=>20,
-                'large_value'=>60,
-                'entry_year'=>now()->year,
-                'show_result'=>'1',
-                'show_all_result'=>'1'
-
-            ]);
-        };
-        $user->roles()->attach(Role::find(1));
-        $user->roles()->attach(Role::find(3));
+        
         return $user;
     }
 }
