@@ -29,6 +29,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'admin_token' => env('ADMIN_TOKEN', 'token'),
 
     /*
     |--------------------------------------------------------------------------

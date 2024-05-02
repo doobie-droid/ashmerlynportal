@@ -52,7 +52,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $admin_token = env('ADMIN_TOKEN');
+        $admin_token = config('app.admin_token');
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:255','unique:users'],
             'firstname'=> ['required','string','max:255'],
@@ -94,8 +94,7 @@ class RegisterController extends Controller
                 Role::create($datum);
             }
 
-            $user->roles()->attach(Role::find(1));
-            $user->roles()->attach(Role::find(3));
+            
             Detail::create([
                 'exam'=>'1',
                 'term'=>'1',
@@ -107,6 +106,8 @@ class RegisterController extends Controller
 
             ]);
         };
+        $user->roles()->attach(Role::find(1));
+        $user->roles()->attach(Role::find(3));
         return $user;
     }
 }
