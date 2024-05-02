@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+Route::get('/login-dev', [App\Http\Controllers\Auth\LoginController::class, 'loginDev'])->name('login.dev');
 Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
